@@ -1,0 +1,9 @@
+.site-links { display:flex; flex-wrap:wrap; align-items:center; gap:10px 22px; }
+.site-links a { color:#a2adb6; text-decoration:none; font:500 11px/1.8 'Noto Sans KR',system-ui,sans-serif; letter-spacing:0; padding:7px 0; }
+.site-links a:hover { color:#b9ff5f; }
+.site-links a:focus-visible { outline:2px solid #b9ff5f; outline-offset:4px; }
+.site-links a:last-child { font-weight:700; }
+.site-footer { flex-wrap:wrap; gap:12px 24px; padding:16px 0; }
+.parry-site-footer { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; border-top:1px solid #ffffff16; padding:20px 4px; color:#8d918e; font:10px/1.8 system-ui,sans-serif; }
+.parry-is-playing .parry-site-footer { display:none; }
+@media(max-width:600px) { .site-links { gap:8px 18px; }.site-footer,.parry-site-footer { align-items:flex-start; flex-direction:column; }.site-links a { font-size:11px; } }

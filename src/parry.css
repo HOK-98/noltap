@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap');
+
+:root { color-scheme:dark; --p-bg:#0b0c0e; --p-border:#302a21; --p-gold:#c29a5c; --p-gold-bright:#e3bf7e; --p-ink:#f2eee5; --p-muted:#96938c; --p-red:#bb4541; --p-mono:'DM Mono',monospace; --p-serif:'Cinzel',serif; }
+* { box-sizing:border-box; }
+html,body { min-width:320px; min-height:100%; margin:0; background:var(--p-bg); color:var(--p-ink); font-family:'Noto Sans KR',sans-serif; -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+body { min-height:100vh; background:radial-gradient(ellipse at 50% -14%,#3a3022 0,transparent 48%),#0b0c0e; }
+button,a,input { font:inherit; }
+button { color:inherit; -webkit-user-select:none; user-select:none; }
+button:focus-visible,a:focus-visible,input:focus-visible { outline:2px solid var(--p-gold-bright); outline-offset:3px; }
+.parry-page { width:min(100% - 64px,1360px); min-height:100vh; margin:0 auto; }
+.parry-bar { height:68px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #ffffff12; }
+.parry-back { color:#c9c5bc; text-decoration:none; font:11px var(--p-mono); letter-spacing:.08em; }.parry-back span { margin-left:8px; color:var(--p-gold-bright); }
+.parry-bar-title { color:#c9c2b5; font:11px var(--p-serif); letter-spacing:.16em; }.parry-bar-title i { color:var(--p-gold); font-style:normal; }
+.parry-sound { width:36px; height:36px; border:1px solid #ffffff22; border-radius:50%; background:#171717; color:var(--p-gold-bright); cursor:pointer; }
+.parry-lobby { display:grid; grid-template-columns:minmax(0,1.05fr) minmax(350px,.95fr); gap:50px; padding:60px 4px 30px; }
+.parry-lobby-main { padding:28px 0 0 24px; }
+.parry-kicker { display:flex; align-items:center; gap:9px; color:#aa8d5b; font:10px var(--p-mono); letter-spacing:.16em; }.parry-kicker i,.parry-result-eyebrow i { width:6px; height:6px; border-radius:50%; background:#d28a3c; box-shadow:0 0 13px #e88c3e88; }
+.parry-lobby h1 { margin:20px 0 16px; font:600 clamp(55px,7vw,92px)/.92 var(--p-serif); letter-spacing:-.055em; text-shadow:0 8px 36px #000a; }.parry-lobby h1>span { color:var(--p-gold-bright); }.parry-lobby h1 em { color:#b99b68; font-size:.48em; font-style:normal; letter-spacing:.12em; }
+.parry-intro { margin:22px 0 28px; color:#b7b1a7; font-size:14px; line-height:1.9; }
+.parry-bestline { display:flex; align-items:baseline; gap:13px; width:min(100%,465px); padding:13px 0 15px; border-top:1px solid #ffffff1b; border-bottom:1px solid #ffffff1b; color:#9d988f; font-size:11px; }.parry-bestline strong { margin-left:auto; color:var(--p-gold-bright); font:22px var(--p-mono); }.parry-bestline i { color:#756d61; font-size:10px; font-style:normal; }.parry-bestline b { color:#8a8174; font:9px var(--p-mono); }
+.parry-mode-actions { display:grid; grid-template-columns:1fr 1fr; gap:12px; width:min(100%,490px); margin-top:22px; }
+.parry-start { min-height:63px; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 16px; border:1px solid #9f7946; border-radius:4px; background:linear-gradient(135deg,#9c713c,#72512d); color:#fff7e7; text-align:left; cursor:pointer; transition:filter .16s ease,transform .16s ease; }.parry-start:hover { filter:brightness(1.13); transform:translateY(-2px); }.parry-start:disabled { opacity:.55; cursor:wait; transform:none; }.parry-start span { display:grid; gap:4px; font-size:13px; font-weight:700; }.parry-start small { color:#ead7b7; font:8px var(--p-mono); letter-spacing:.08em; }.parry-start b { font-size:20px; font-weight:400; }.parry-daily-start { border-color:#473c2c; background:linear-gradient(135deg,#27231d,#171615); }.parry-daily-start small { color:#c6a46d; }
+.parry-controls-note { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-top:18px; color:#88847c; font-size:10px; }.parry-controls-note kbd,.parry-hint kbd { display:inline-grid; min-width:20px; height:20px; place-items:center; margin-right:3px; border:1px solid #4b4437; border-radius:3px; color:#d8ccb6; font:9px var(--p-mono); }.parry-controls-note i { color:#77736d; font-style:normal; }
+.parry-lobby-side { display:grid; align-content:start; gap:13px; }.parry-nickname,.parry-board,.parry-rules { border:1px solid #342f27; border-radius:5px; background:linear-gradient(145deg,#171817,#101112); box-shadow:0 16px 42px #0003; }
+.parry-nickname { padding:15px 17px 12px; }.parry-nickname label { display:flex; justify-content:space-between; color:#d8d1c5; font-size:11px; font-weight:700; }.parry-nickname label small { color:#81796d; font:9px var(--p-mono); }.parry-nickname>div { display:flex; gap:8px; margin-top:10px; }.parry-nickname input { min-width:0; flex:1; height:37px; padding:0 10px; border:1px solid #3d3a34; border-radius:3px; background:#0b0d0e; color:#f4efe5; font-size:12px; }.parry-nickname button { min-width:54px; border:1px solid #746044; border-radius:3px; background:#28231b; color:#dfc38e; font-size:10px; cursor:pointer; }.parry-nickname p { margin:8px 0 0; color:#77746e; font-size:9px; line-height:1.5; }
+.parry-board { padding:15px 17px 12px; }.parry-board-head { display:flex; align-items:center; justify-content:space-between; gap:14px; }.parry-board-head .parry-kicker { font-size:8px; }.parry-board-head h2 { margin:5px 0 0; font-size:16px; letter-spacing:-.04em; }.parry-tabs { display:flex; padding:3px; border:1px solid #35312a; border-radius:4px; background:#0d0f10; }.parry-tabs button { padding:6px 10px; border:0; border-radius:3px; background:transparent; color:#8c887f; font-size:10px; cursor:pointer; }.parry-tabs button.is-active { background:#443727; color:#efcf96; }.parry-board-date { margin-top:11px; color:#8b8375; font-size:9px; }
+.parry-board-cols,.parry-board-list li { display:grid; grid-template-columns:minmax(0,1fr) 55px 78px; align-items:center; gap:8px; }.parry-board-cols { margin-top:10px; padding:7px 0; border-top:1px solid #ffffff12; border-bottom:1px solid #ffffff12; color:#6f6a60; font:8px var(--p-mono); }.parry-board-cols span:not(:first-child),.parry-board-list li>span:not(:first-child) { text-align:right; }.parry-board-list { min-height:79px; max-height:168px; margin:0; padding:0; overflow:auto; list-style:none; }.parry-board-list li { min-height:29px; border-bottom:1px solid #ffffff09; color:#c3bbae; font:10px var(--p-mono); }.parry-board-list li:last-child { border-bottom:0; }.parry-board-list li.is-me { color:#f1d08f; }.parry-rank { display:flex; align-items:center; gap:10px; min-width:0; }.parry-rank i { color:#9e8255; font:9px var(--p-mono); font-style:normal; }.parry-rank b { overflow:hidden; color:#c6c0b7; font:10px 'Noto Sans KR',sans-serif; font-weight:500; text-overflow:ellipsis; white-space:nowrap; }.parry-board-foot { margin:7px 0 0; color:#69665e; font-size:8px; }
+.parry-rules { padding:14px 17px 13px; }.parry-rules h2 { margin:8px 0 10px; color:#ddd5c8; font-size:13px; }.parry-rules p { display:flex; justify-content:space-between; gap:12px; margin:6px 0; color:#99948a; font:9px var(--p-mono); }.parry-rules p b { color:#c3a16b; }.parry-rules small { display:block; margin-top:10px; color:#7c766b; font-size:9px; }
+.parry-ad-space { grid-column:1/-1; min-height:43px; display:flex; justify-content:center; align-items:center; gap:13px; margin:5px 20px 0; border:1px dashed #282821; color:#605b50; font:8px var(--p-mono); letter-spacing:.11em; }.parry-ad-space span { color:#55524b; font:9px 'Noto Sans KR',sans-serif; letter-spacing:0; }
+.parry-battle { padding:16px 0 25px; }.parry-hud-top { min-height:68px; display:grid; grid-template-columns:90px minmax(220px,1fr) auto 38px; align-items:center; gap:20px; padding:0 4px 13px; }.parry-exit,.parry-pause { border:1px solid #3a342a; border-radius:4px; background:#131414; color:#aaa399; cursor:pointer; }.parry-exit { justify-self:start; padding:9px 11px; font-size:10px; }.parry-pause { width:36px; height:36px; color:#d2b37c; }
+.parry-boss-info { display:grid; grid-template-columns:145px minmax(100px,1fr); align-items:center; gap:19px; }.parry-boss-name { display:grid; gap:2px; }.parry-boss-name span,.parry-boss-health span,.parry-player-vitality span,.parry-combat-data small { color:#8e877a; font:8px var(--p-mono); letter-spacing:.08em; }.parry-boss-name strong { color:#e7dfd1; font-size:13px; }.parry-boss-name i { color:#b38d53; font:8px var(--p-serif); font-style:normal; letter-spacing:.1em; }.parry-boss-health>div:first-child,.parry-player-vitality>div:first-child { display:flex; align-items:center; justify-content:space-between; margin-bottom:7px; }.parry-boss-health b,.parry-player-vitality b { color:#c6bdae; font:9px var(--p-mono); }
+.parry-health-track { height:7px; overflow:hidden; border:1px solid #ffffff12; border-radius:10px; background:#090a0b; }.parry-health-track i { height:100%; display:block; width:100%; border-radius:inherit; transition:width .18s linear; }.enemy-track i { background:linear-gradient(90deg,#86352e,#ce7c42); box-shadow:0 0 12px #c3553977; }.player-track i { background:linear-gradient(90deg,#55726b,#91b79b); box-shadow:0 0 12px #70a38355; }.parry-score { display:grid; justify-items:end; gap:2px; }.parry-score span { color:#8c8579; font:8px var(--p-mono); letter-spacing:.1em; }.parry-score strong { color:#e0c18a; font:19px var(--p-mono); }
+.parry-arena-wrap { position:relative; width:100%; height:min(62vh,calc((100vw - 64px)*.5625)); min-height:340px; max-height:690px; overflow:hidden; border:1px solid #54442e; border-radius:4px; background:#090c0f; box-shadow:0 22px 72px #0008,inset 0 0 40px #0009; isolation:isolate; }.parry-arena-wrap::after { position:absolute; z-index:1; inset:0; border:1px solid #d2af6a21; content:''; pointer-events:none; }.parry-canvas { position:absolute; inset:0; }.parry-canvas canvas { display:block; width:100%!important; height:100%!important; }
+.parry-intent { position:absolute; z-index:2; top:12%; left:50%; display:grid; justify-items:center; gap:6px; width:min(80%,440px); text-align:center; transform:translateX(-50%); pointer-events:none; text-shadow:0 2px 12px #000; }.parry-intent span { color:#c4a36d; font:9px var(--p-mono); letter-spacing:.18em; }.parry-intent strong { color:#f1e7d5; font-size:clamp(15px,2vw,21px); letter-spacing:-.04em; }.parry-intent i { color:#e6c47c; font-style:normal; font-size:12px; }
+.parry-countdown { position:absolute; z-index:3; inset:0; display:grid; align-content:center; justify-items:center; gap:5px; background:#05070960; text-align:center; text-shadow:0 0 32px #e1ad5a88; pointer-events:none; }.parry-countdown small { color:#d6bd94; font:9px var(--p-mono); letter-spacing:.2em; }.parry-countdown strong { color:#fff0d0; font:600 clamp(60px,10vw,120px) var(--p-serif); }
+.parry-feedback { position:absolute; z-index:4; top:44%; left:50%; opacity:0; color:#fff4d9; font:600 clamp(24px,4vw,44px) var(--p-serif); letter-spacing:.13em; transform:translate(-50%,-50%) scale(.85); transition:opacity .08s linear,transform .08s linear; pointer-events:none; }.parry-feedback.is-perfect,.parry-feedback.is-good,.parry-feedback.is-miss { opacity:1; transform:translate(-50%,-50%) scale(1); }.parry-feedback.is-perfect { color:#ffe8aa; text-shadow:0 0 25px #ffc75f; }.parry-feedback.is-good { color:#d6c5a0; text-shadow:0 0 18px #ffcb7477; }.parry-feedback.is-miss { color:#e87870; text-shadow:0 0 24px #c92a34; }
+.parry-pause-overlay { position:absolute; z-index:5; inset:0; display:grid; align-content:center; justify-items:center; gap:13px; background:#08090bd9; }.parry-pause-overlay>span { color:#d0ae73; font:26px var(--p-mono); }.parry-pause-overlay strong { font-size:19px; }.parry-pause-overlay button { margin-top:4px; padding:11px 28px; border:1px solid #8c7045; border-radius:4px; background:#392d1d; color:#f4dbae; cursor:pointer; }
+.parry-fight-title { position:absolute; z-index:2; left:50%; bottom:13%; display:grid; justify-items:center; gap:5px; opacity:0; transform:translate(-50%,10px); transition:opacity .2s ease,transform .2s ease; pointer-events:none; text-shadow:0 3px 16px #000; }.parry-fight-title.is-on { opacity:1; transform:translate(-50%,0); }.parry-fight-title span { color:#c3a16b; font:8px var(--p-mono); letter-spacing:.2em; }.parry-fight-title b { color:#f0e5d2; font-size:20px; }
+.parry-underbar { display:grid; grid-template-columns:minmax(160px,1fr) auto 164px; align-items:center; gap:25px; min-height:81px; padding:13px 9px 8px; border-bottom:1px solid #ffffff16; }.parry-combat-data { display:flex; gap:21px; }.parry-combat-data>span { display:grid; gap:5px; }.parry-combat-data b { color:#c8b99d; font:12px var(--p-mono); }.parry-combat-data>span:first-child b { color:#e0bf82; }
+.parry-dpad { display:grid; grid-template:repeat(2,42px)/repeat(3,42px); justify-content:center; align-content:center; gap:4px; touch-action:none; }.parry-dpad button { width:42px; height:42px; border:1px solid #66533a; border-radius:5px; background:linear-gradient(145deg,#332b20,#1b1b19); color:#e9d2a2; font:20px var(--p-mono); cursor:pointer; touch-action:none; }.parry-dpad button:active { background:#735632; transform:scale(.95); }.dpad-up { grid-area:1/2; }.dpad-left { grid-area:2/1; }.dpad-down { grid-area:2/2; }.dpad-right { grid-area:2/3; }
+.parry-hint { display:flex; justify-content:space-between; gap:14px; padding:12px 9px 0; color:#777168; font-size:9px; }.parry-hint span:first-child { display:flex; align-items:center; gap:2px; }.parry-hint kbd { min-width:17px; height:17px; padding:0 3px; font-size:8px; }
+.parry-result { max-width:720px; margin:42px auto; padding:34px 40px 38px; border:1px solid #433a2c; border-radius:5px; background:radial-gradient(ellipse at 50% 0,#332819,#151615 56%); box-shadow:0 25px 80px #0008; text-align:center; }.parry-result-eyebrow { display:flex; justify-content:center; align-items:center; gap:9px; color:#ba9b68; font:9px var(--p-mono); letter-spacing:.16em; }.parry-result h1 { margin:15px 0 6px; font:600 clamp(43px,7vw,67px)/.9 var(--p-serif); letter-spacing:-.04em; }.parry-result h1 em { color:#c4a16b; font-style:normal; }.parry-result>p { color:#aaa49a; font-size:12px; }
+.parry-result-main { display:grid; grid-template-columns:1fr 1fr; margin:25px 0 18px; border-top:1px solid #ffffff18; border-bottom:1px solid #ffffff18; }.parry-result-main>div { display:grid; justify-items:center; padding:17px 10px; }.parry-result-main>div+div { border-left:1px solid #ffffff18; }.parry-result-main span,.parry-result-main small { color:#898276; font:8px var(--p-mono); letter-spacing:.1em; }.parry-result-main strong { margin:5px 0 2px; color:#e6c385; font:32px var(--p-mono); }.parry-result-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }.parry-result-grid>div { display:grid; gap:6px; padding:12px 8px; border:1px solid #ffffff12; border-radius:3px; background:#ffffff05; }.parry-result-grid span { color:#8e887e; font-size:9px; }.parry-result-grid b { color:#d3c8b5; font:14px var(--p-mono); }.parry-result-rank { margin:17px 0 20px; color:#d2b378; font-size:11px; }.parry-result-actions { display:flex; justify-content:center; flex-wrap:wrap; gap:9px; }.parry-result-actions .parry-start { min-width:190px; }.parry-result-actions>button:not(.parry-start) { padding:10px 14px; border:1px solid #51483a; border-radius:4px; background:#171817; color:#c6bca8; font-size:10px; cursor:pointer; }
+.parry-toast { position:fixed; z-index:20; right:20px; bottom:20px; max-width:min(400px,calc(100vw - 40px)); padding:12px 16px; border:1px solid #8c7045; border-radius:4px; background:#1d1b17; color:#eee1c9; font-size:11px; opacity:0; transform:translateY(8px); transition:opacity .15s,transform .15s; pointer-events:none; }.parry-toast.is-visible { opacity:1; transform:translateY(0); }.parry-hit-shake { animation:parry-shake .17s linear; } @keyframes parry-shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+.hidden { display:none!important; }
+@media (max-width:900px) { .parry-page { width:min(100% - 38px,700px); }.parry-lobby { grid-template-columns:1fr; gap:24px; padding:34px 4px 24px; }.parry-lobby-main { padding:7px 7px 0; }.parry-lobby h1 { font-size:clamp(55px,11vw,82px); }.parry-lobby-side { grid-template-columns:1fr 1fr; }.parry-board { grid-row:span 2; }.parry-rules { grid-column:1; }.parry-ad-space { margin:0 0 8px; }.parry-arena-wrap { height:min(58vh,calc((100vw - 38px)*.5625)); } }
+@media (max-width:620px) { .parry-page { width:calc(100% - 24px); }.parry-bar { height:55px; }.parry-bar-title { font-size:9px; letter-spacing:.1em; }.parry-sound { width:32px; height:32px; }.parry-lobby { gap:18px; padding:28px 0 18px; }.parry-lobby-main { padding:2px 4px 0; }.parry-kicker { font-size:8px; }.parry-lobby h1 { margin:16px 0 11px; font-size:clamp(48px,13vw,70px); }.parry-intro { margin:15px 0 20px; font-size:12px; }.parry-bestline { gap:8px; font-size:9px; }.parry-bestline strong { font-size:18px; }.parry-mode-actions { gap:7px; margin-top:15px; }.parry-start { min-height:58px; padding:8px 10px; }.parry-start span { font-size:11px; }.parry-start small { font-size:7px; letter-spacing:0; }.parry-controls-note { gap:6px; font-size:9px; }.parry-lobby-side { grid-template-columns:1fr; gap:9px; }.parry-board { grid-row:auto; }.parry-rules { grid-column:auto; }.parry-ad-space { min-height:38px; margin-top:0; font-size:7px; }.parry-ad-space span { font-size:8px; }.parry-hud-top { grid-template-columns:58px minmax(120px,1fr) auto 32px; gap:7px; min-height:58px; padding:0 0 8px; }.parry-exit { padding:7px 6px; font-size:9px; }.parry-boss-info { grid-template-columns:minmax(80px,.7fr) minmax(70px,1fr); gap:7px; }.parry-boss-name span,.parry-boss-health span { font-size:6px; }.parry-boss-name strong { font-size:10px; }.parry-boss-name i { font-size:6px; }.parry-boss-health b,.parry-player-vitality b { font-size:7px; }.parry-health-track { height:6px; }.parry-score span { font-size:6px; }.parry-score strong { font-size:13px; }.parry-pause { width:30px; height:30px; }.parry-battle { padding-top:10px; }.parry-arena-wrap { height:min(53vh,calc((100vw - 24px)*.68)); min-height:270px; max-height:460px; }.parry-intent { top:8%; }.parry-intent span { font-size:7px; }.parry-intent strong { font-size:14px; }.parry-underbar { grid-template-columns:1fr auto; gap:9px; min-height:0; padding:11px 4px 9px; }.parry-player-vitality { grid-column:1/-1; }.parry-combat-data { gap:15px; }.parry-combat-data small { font-size:7px; }.parry-combat-data b { font-size:10px; }.parry-dpad { grid-column:2; grid-row:2; grid-template:repeat(2,38px)/repeat(3,38px); }.parry-dpad button { width:38px; height:38px; font-size:18px; }.parry-hint { flex-direction:column; gap:5px; padding:9px 4px 0; font-size:8px; }.parry-result { margin:24px auto; padding:28px 16px 24px; }.parry-result-grid { gap:5px; }.parry-result-grid>div { padding:10px 4px; }.parry-result-grid span { font-size:8px; }.parry-result-grid b { font-size:12px; }.parry-result-actions .parry-start { min-width:150px; } }
+@media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition:none!important; animation-duration:.01ms!important; animation-iteration-count:1!important; } }
+
+/* The arena fills the battle view; the HUD remains a crisp HTML overlay. */
+.parry-is-playing .parry-page { width:100%; }
+.parry-is-playing .parry-bar { height:48px; padding:0 28px; background:#090d10; }
+.parry-is-playing .parry-battle { position:relative; height:calc(100svh - 48px); min-height:560px; padding:0; }
+.parry-is-playing .parry-arena-wrap { position:absolute; inset:0; height:100%; max-height:none; min-height:0; border:0; border-radius:0; }
+.parry-is-playing .parry-arena-wrap::after { border:0; background:linear-gradient(#03070bb3,transparent 24%,transparent 70%,#03070bd9),radial-gradient(ellipse at center,transparent 35%,#03070b70); }
+.parry-is-playing .parry-hud-top { position:absolute; z-index:4; top:20px; left:32px; right:32px; gap:24px; background:none; border:0; }
+.parry-is-playing .parry-boss-info { width:min(540px,100%); margin:auto; }
+.parry-is-playing .parry-underbar { position:absolute; z-index:4; left:32px; right:32px; bottom:36px; background:none; border:0; }
+.parry-is-playing .parry-hint { position:absolute; z-index:4; bottom:12px; left:32px; right:32px; border:0; opacity:.65; }
+.parry-is-playing .parry-intent { top:22%; }
+.parry-intent[data-motion="withdraw"] strong,.parry-intent[data-motion="redirect"] strong { color:#a6b6c4; }
+.parry-intent[data-motion="withdraw"] i,.parry-intent[data-motion="redirect"] i { color:#a6b6c4; }
+.parry-intent[data-motion="strike"] span,.parry-intent[data-motion="strike"] i { color:#ffe4a4; }
+.parry-canvas::before,.parry-canvas::after { position:absolute; inset:0; content:''; pointer-events:none; opacity:0; transition:opacity .08s; will-change:opacity; }
+.parry-canvas::before { background:radial-gradient(ellipse,transparent 48%,#edbf5125); }
+.parry-canvas::after { background:radial-gradient(ellipse,transparent 35%,#c92c3765); }
+.parry-canvas[data-outcome="miss"]::after,.parry-canvas[data-outcome="perfect"]::before { opacity:1; }
+.parry-is-playing .parry-dpad button { background:#0b1119e8; border-color:#c3b38e60; }
+@media (max-width:620px) {
+  .parry-is-playing .parry-bar { padding:0 14px; height:45px; }
+  .parry-is-playing .parry-battle { height:calc(100svh - 45px); min-height:530px; }
+  .parry-is-playing .parry-hud-top { top:12px; left:12px; right:12px; gap:9px; }
+  .parry-is-playing .parry-boss-info { grid-template-columns:1fr; gap:6px; }
+  .parry-is-playing .parry-boss-name { text-align:center; }
+  .parry-is-playing .parry-boss-name i { display:none; }
+  .parry-is-playing .parry-underbar { left:16px; right:16px; bottom:28px; gap:18px; }
+  .parry-is-playing .parry-player-vitality { max-width:250px; }
+  .parry-is-playing .parry-dpad { grid-template:repeat(2,54px)/repeat(3,54px); }
+  .parry-is-playing .parry-dpad button { width:54px; height:54px; font-size:25px; }
+  .parry-is-playing .parry-hint { left:16px; right:16px; bottom:8px; font-size:7px; }
+  .parry-is-playing .parry-hint span:first-child { display:none; }
+  .parry-is-playing .parry-intent { top:20%; }
+}
+
+/* Restrained duel presentation: cool steel, warm fire, clear negative space. */
+body { background:radial-gradient(ellipse at 38% 0,#192027 0,transparent 57%),#090d12; }
+.parry-lobby-main { position:relative; isolation:isolate; overflow:hidden; min-height:570px; padding:42px 32px 34px; border:1px solid #3f47482e; border-radius:10px; background:#0c131a; }
+.parry-lobby-art { position:absolute; z-index:-2; width:100%; height:100%; inset:0; object-fit:cover; object-position:54% center; opacity:.65; filter:saturate(.7); }
+.parry-lobby-main::after { position:absolute; z-index:-1; inset:0; content:''; background:linear-gradient(90deg,#070b10f2,#070b10b0 50%,#070b1010),linear-gradient(0deg,#070b10,transparent 60%); }
+.parry-lobby h1 { font-weight:500; text-shadow:0 3px 20px #0006; }
+.parry-bestline { max-width:440px; background:#070b1055; }
+.parry-intro { max-width:390px; color:#b9c1c7; }
+.parry-nickname,.parry-board,.parry-rules { background:#10161c; border-color:#2d363c; border-radius:8px; box-shadow:none; }
+.parry-start { background:linear-gradient(135deg,#b08a55,#846038); border-color:#b39361; border-radius:5px; box-shadow:inset 0 1px #fff2; }
+.parry-daily-start { background:#131c23; border-color:#485058; box-shadow:none; }
+.parry-ad-space { opacity:.6; }
+.parry-board-list .parry-empty-record { display:flex; justify-content:center; min-height:79px; color:#98a5af; font:11px/1.8 'Noto Sans KR',sans-serif; }
+.parry-is-playing .parry-bar { background:#080d12; border-bottom-color:#ffffff0b; }
+.parry-is-playing .parry-hud-top { top:22px; }
+.parry-is-playing .parry-boss-info { grid-template-columns:1fr; max-width:410px; gap:10px; }
+.parry-is-playing .parry-boss-name { display:flex; justify-content:center; gap:12px; align-items:baseline; }
+.parry-is-playing .parry-boss-name i { display:none; }
+.parry-is-playing .parry-boss-name strong { font-size:15px; letter-spacing:.06em; }
+.parry-is-playing .parry-boss-health>div:first-child { display:none; }
+.parry-is-playing .parry-health-track { height:5px; border:0; border-radius:1px; background:#0c1117a6; }
+.parry-is-playing .parry-health-track i { border-radius:1px; box-shadow:none; }
+.enemy-track i { background:linear-gradient(90deg,#703d38,#c6a27a); }
+.parry-is-playing .parry-score strong { font-size:17px; color:#d4c8ad; }
+.parry-is-playing .parry-intent { top:15%; gap:5px; }
+.parry-is-playing .parry-intent span { font-size:8px; letter-spacing:.22em; color:#c0b49b; }
+.parry-is-playing .parry-intent strong { font-size:13px; color:#d6d9da; font-weight:500; }
+.parry-is-playing .parry-intent i { display:none; }
+.parry-is-playing .parry-arena-wrap::after { background:linear-gradient(#03070bb3,transparent 28%,transparent 65%,#03070beb),radial-gradient(ellipse at center,transparent 35%,#02050a80); }
+.parry-feedback { top:58%; font-size:clamp(18px,2.7vw,30px); letter-spacing:.15em; }
+.parry-feedback.is-perfect { text-shadow:0 1px 15px #e0bd7b60; }
+.parry-is-playing .parry-underbar { grid-template-columns:minmax(150px,230px) 1fr auto; gap:32px; bottom:38px; }
+.parry-is-playing .parry-combat-data { justify-content:flex-start; gap:28px; }
+.parry-is-playing .parry-dpad { opacity:.72; }
+.parry-is-playing .parry-dpad:focus-within,.parry-is-playing .parry-dpad:hover { opacity:1; }
+.parry-is-playing .parry-dpad button { border-color:#9aada347; background:#0a1019b0; box-shadow:inset 0 1px #ffffff09; border-radius:4px; }
+.parry-is-playing .parry-exit,.parry-is-playing .parry-pause { background:#0a101666; border-color:#ffffff20; }
+.parry-is-playing .parry-hint { color:#9ba7b0; opacity:.75; }
+.parry-result { border-radius:10px; border-color:#4f5349; background:radial-gradient(ellipse at 50% 0,#283039,#10151b 65%); }
+@media(max-width:900px) { .parry-lobby-main { min-height:500px; padding:34px 26px; }.parry-lobby-art { object-position:center; } }
+@media(max-width:620px) {
+  .parry-lobby-main { min-height:450px; padding:26px 18px; }
+  .parry-lobby h1 { font-size:clamp(48px,12vw,70px); }
+  .parry-is-playing .parry-hud-top { top:14px; }
+  .parry-is-playing .parry-boss-info { gap:9px; }
+  .parry-is-playing .parry-boss-name { display:grid; gap:4px; }.parry-is-playing .parry-boss-name strong { font-size:12px; }
+  .parry-is-playing .parry-intent { top:17%; }.parry-is-playing .parry-intent strong { font-size:12px; }
+  .parry-is-playing .parry-underbar { grid-template-columns:1fr auto; gap:12px; bottom:32px; }
+  .parry-is-playing .parry-player-vitality { grid-column:1/-1; max-width:190px; }
+  .parry-is-playing .parry-combat-data { gap:18px; }
+  .parry-is-playing .parry-dpad { opacity:1; }.parry-is-playing .parry-dpad button { background:#0a1019e6; }
+}

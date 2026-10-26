@@ -1,0 +1,20 @@
+{
+  "name": "playbox-web-arcade",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "@gltf-transform/core": "^4.5.1",
+    "three-bvh-csg": "^0.0.18",
+    "vite": "^6.4.1"
+  },
+  "dependencies": {
+    "three": "^0.186.1"
+  }
+}

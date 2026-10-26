@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="ko">
+<meta charset="utf-8">
+<title>PARRY 카드 이미지 렌더</title>
+<style>html,body,#preview{width:100%;height:100%;margin:0;overflow:hidden;background:#11171c}canvas{display:block;width:100%;height:100%}</style>
+<div id="preview"></div>
+<script type="module">
+  import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+  import {createParryRenderer} from '../src/parry-three.js';
+  const model = {
+    phase:'telegraph', effectUntil:0, lastOutcome:'', lastParryDirection:'right',
+    currentAttack:{startedAt:0,swingAtMs:900,revealed:true,direction:'right',answered:false},
+  };
+  const asset = await new GLTFLoader().loadAsync('/models/parry-knight.glb');
+  createParryRenderer(document.querySelector('#preview'),model,(now)=>{model.currentAttack.startedAt=now-650;},asset);
+  document.body.dataset.ready='true';
+</script>
+</html>

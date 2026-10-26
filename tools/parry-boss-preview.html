@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ko"><meta charset="utf-8"><title>보스 외형 미리보기</title>
+<style>html,body{margin:0;background:#090f18;color:#eee;font:14px sans-serif}#view{height:calc(100vh - 54px)}nav{height:54px;display:flex;align-items:center;gap:12px;padding:0 24px}button,select{padding:8px;background:#202b38;color:white;border:1px solid #59697a}canvas{display:block}</style>
+<nav><label>보스 <select id="boss"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></label><button id="motion">연속 공격 재생</button><span id="status">모델 로딩 중</span></nav><div id="view"></div>
+<script type="module">
+import {prepareParryAssets,createParryRenderer} from '../src/parry-three.js';
+import {createAttackPlan,bossName} from '../src/parry-engine.js';
+let playing=false,started=0,lastIndex=-1;
+const model={boss:1,phase:'telegraph',effectUntil:0,lastOutcome:'',lastParryDirection:'right',currentAttack:null};
+const view=document.querySelector('#view'),status=document.querySelector('#status');
+const makeAttack=(now,direction='right',warning=700)=>({startedAt:now,swingAtMs:warning-180,impactAtMs:warning,revealed:true,direction,answered:false});
+const renderer=createParryRenderer(view,model,now=>{
+ if(!playing){model.currentAttack=makeAttack(now-430);return;}
+ const time=now-started,index=Math.floor(time/540);
+ if(index!==lastIndex){lastIndex=index;model.currentAttack=makeAttack(now,['left','right','up','down'][index%4],400);}
+},await prepareParryAssets(1));
+status.textContent=bossName(1);
+document.querySelector('#boss').onchange=async event=>{const boss=Number(event.target.value);status.textContent='모델 로딩 중';await renderer.prepareBoss(boss);model.boss=boss;status.textContent=bossName(boss);document.body.dataset.boss=String(boss);};
+document.querySelector('#motion').onclick=()=>{playing=!playing;started=performance.now();lastIndex=-1;document.querySelector('#motion').textContent=playing?'준비 자세 보기':'연속 공격 재생';};
+document.body.dataset.ready='true';
+</script></html>
