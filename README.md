@@ -1,8 +1,8 @@
-# NOLTAP — 누르지 마!
+# 놀탭 NOLTAP — 웹게임과 재미 도구
 
-여러 웹게임을 모아 운영할 Noltap 아케이드 프로젝트입니다. 현재 **누르지 마!**와 **PARRY: LAST BLADE**를 플레이할 수 있습니다. 포털은 `index.html`, 두 번째 게임은 독립 페이지 `parry.html`에서 제공하며, 각 게임 화면·진행 로직·랭킹 API를 분리해 관리합니다.
+게임과 심심풀이·실용 도구를 모아 운영하는 놀탭(NOLTAP) 웹 포털입니다. 현재 **누르지 마!**, **PARRY: LAST BLADE**, **통통! 해적 룰렛**을 플레이할 수 있습니다. 포털은 `index.html`, 각 게임은 `parry.html`과 `pirate.html`에서 제공하며, 게임 화면·진행 로직·랭킹 API를 분리해 관리합니다.
 
-프런트엔드는 Vite 정적 빌드로 배포하고, 온라인 랭킹은 Hostinger의 PHP 8.2 이상과 MySQL/MariaDB를 사용합니다. DB/API 설정 전에도 두 게임 모두 로컬 기록으로 플레이할 수 있습니다. PARRY 전투 장면은 Three.js의 실제 3D 장면이며, Meshy에서 생성하고 리깅한 기사 GLB와 1인칭 검, 성채, 조명, 그림자를 사용합니다. 게임 판정 로직은 별도 모듈로 관리합니다.
+프런트엔드는 Vite 정적 빌드로 배포합니다. **누르지 마!**와 **PARRY**의 온라인 랭킹은 Hostinger의 PHP 8.2 이상과 MySQL/MariaDB를 사용합니다. **통통! 해적 룰렛**은 서버나 DB 없이 한 기기에서 2~8명이 함께 하는 로컬 패스 앤 플레이 게임입니다. 세 게임의 진행 로직은 화면 코드와 분리되어 있습니다. PARRY와 해적 룰렛은 Three.js로 만든 3D 장면을 사용합니다.
 
 ## 로컬 실행
 
@@ -13,7 +13,7 @@ npm install
 npm run dev
 ```
 
-게임 엔진 규칙을 확인하려면 `npm test`를 실행합니다. 배포 번들은 `npm run build`로 생성합니다.
+각 게임 엔진 규칙을 확인하려면 `npm test`를 실행합니다. 배포 번들은 `npm run build`로 생성합니다.
 
 랭킹 API까지 로컬에서 확인하려면 PHP 8.1 이상과 `pdo_mysql`이 필요합니다. `public/api/config.example.php`를 `public/api/config.php`로 복사한 뒤 개발용 DB 접속 정보를 입력하고 터미널 두 개에서 실행합니다.
 
@@ -25,7 +25,7 @@ php -S 127.0.0.1:8000 -t public
 npm run dev
 ```
 
-Vite 개발 서버는 `/api` 요청을 PHP 개발 서버로 전달합니다. DB가 설정되지 않으면 서버 랭킹은 비활성화되고 게임은 로컬 모드로 실행됩니다.
+Vite 개발 서버는 `/api` 요청을 PHP 개발 서버로 전달합니다. DB가 설정되지 않으면 누르지 마!와 PARRY의 서버 랭킹은 비활성화되고 두 게임은 로컬 기록으로 실행됩니다. 해적 룰렛은 PHP API를 사용하지 않습니다.
 
 ## DB 만들기
 
@@ -63,7 +63,7 @@ return [
    npm run build
    ```
 
-2. `dist` 폴더 안의 **내용물 전체**를 Hostinger의 `public_html`에 업로드합니다. 폴더 자체가 아니라 `index.html`, `parry.html`, `assets/`, `models/`, `api/`, `.htaccess`가 `public_html` 바로 아래에 오도록 합니다. `models/parry-knight.glb`가 빠지면 PARRY를 시작할 수 없습니다.
+2. `dist` 폴더 안의 **내용물 전체**를 Hostinger의 `public_html`에 업로드합니다. 폴더 자체가 아니라 `index.html`, `parry.html`, `pirate.html`, `assets/`, `models/`, `api/`, `.htaccess`가 `public_html` 바로 아래에 오도록 합니다. PARRY의 `models/parry-knight.glb` 또는 해적 룰렛의 `models/barrel.glb`, `models/pirate.glb`, `models/knife.glb`가 빠지면 해당 3D 게임 장면을 불러올 수 없습니다.
 3. `public_html/api/config.example.php`를 복사해 `public_html/api/config.php`를 만들고 DB 접속 값을 입력합니다.
 4. `database/parry-v1.sql`을 실행했는지 확인한 뒤 사이트와 `/parry.html`을 열어 랭킹 연결을 확인합니다.
 
@@ -71,7 +71,7 @@ Node.js 서버는 운영에 필요하지 않습니다. PHP 8.2 이상이 활성�
 
 Hostinger의 최신 절차는 [File Manager 안내](https://www.hostinger.com/support/4548688-basic-actions-in-the-file-manager-in-hostinger/), [phpMyAdmin SQL 가져오기](https://www.hostinger.com/support/1884149-how-to-import-a-database-with-phpmyadmin-in-hostinger/), [PHP 버전 설정](https://www.hostinger.com/support/1575755-how-to-change-the-php-version-of-your-hosting-plan/)에서 확인할 수 있습니다. Hostinger는 Web·Cloud 호스팅에서 PDO와 `pdo_mysql`을 지원한다고 안내합니다.
 
-## 게임 규칙과 점수
+## 누르지 마! 게임 규칙과 점수
 
 - 영어 단어 `RED`, `BLUE`, `GREEN`, `YELLOW`의 **뜻은 무시하고 실제 글자색**을 아래 네 버튼에서 선택합니다.
 - 버튼은 빨강/파랑, 초록/노랑 순서로 고정됩니다. 키보드 `1`–`4`, 마우스, 모바일 터치를 지원합니다.
@@ -105,6 +105,16 @@ Hostinger의 최신 절차는 [File Manager 안내](https://www.hostinger.com/su
 - 3D 엔진과 기사 모델은 첫 시작 시 불러오며, 모델 로딩을 완료한 뒤 카운트다운을 시작합니다. WebGL 2를 지원하는 최신 PC·모바일 브라우저가 필요합니다. 모바일은 렌더링 해상도와 그림자 크기를 낮춰 GPU 부하를 줄입니다.
 - 기사 관절은 Meshy의 Mixamo 스켈레톤을 사용하며, 게임의 공격 시점에 맞춰 양팔을 움직입니다. 성채와 검은 코드로 만든 3D 메시입니다. 화면 하단 방향 버튼과 체력·점수는 HTML로 표시합니다.
 
+## 통통! 해적 룰렛 (Pirate Barrel)
+
+- [게임 열기](https://noltap.com/pirate.html). 2~8명이 한 컴퓨터나 모바일 기기에서 차례로 플레이하는 로컬 패스 앤 플레이 방식입니다. 온라인 매칭과 컴퓨터 상대는 없습니다.
+- 게임 시작 전에 각자 이름과 서로 겹치지 않는 칼 색을 정합니다. 빨강·파랑·노랑·초록·보라·분홍·주황·검정 중 선택한 색이 실제 3D 칼 손잡이와 통에 꽂힌 칼에 적용됩니다.
+- 각 라운드에는 통의 16개 구멍 중 한 곳에 무작위 함정이 있습니다. 플레이어가 순서대로 구멍을 골라 칼을 꽂고, 함정이 나오면 그 라운드가 끝납니다. 새 라운드마다 첫 플레이어와 함정 위치가 바뀝니다.
+- 안전하게 꽂으면 20점, 함정을 맞힌 플레이어를 제외한 나머지는 라운드 승리 점수 100점을 받습니다. 10라운드가 끝나면 누적 점수가 가장 높은 플레이어가 우승하며, 동점이면 공동 우승입니다.
+- 칼을 꽂을 구멍은 마우스나 터치로 고릅니다. 드래그 또는 회전 화살표로 3D 통을 돌릴 수 있고, 키보드 `Tab`으로 구멍을 이동해 `Enter`로 선택할 수 있습니다. WebGL을 사용할 수 없는 환경에서는 번호 목록으로 플레이합니다.
+- 효과음은 음소거할 수 있습니다. 설정과 완료한 대전 수·최고 참가자 점수는 현재 브라우저에 저장됩니다. 새로고침하면 진행 중인 대전은 초기화됩니다.
+- 게임은 실제 돈이나 상품을 걸지 않는 캐주얼 게임입니다. 기록은 브라우저에만 저장되며 온라인 랭킹이나 서버 검증을 제공하지 않습니다.
+
 ## 주요 파일
 
 - `index.html`: 한국어 문서 설정, 모바일 화면 설정, 앱 진입점
@@ -121,6 +131,13 @@ Hostinger의 최신 절차는 [File Manager 안내](https://www.hostinger.com/su
 - `src/parry-motion.js`: 방향을 유지하는 준비 자세 → 실제 베기 궤적과 HUD 단계 (페이크는 6번째 보스부터)
 - `src/parry-performance.js`: 렌더 픽셀 예산과 지속적인 프레임 지연에 따른 해상도 자동 조절
 - `public/models/parry-knight.glb`: 텍스처·스켈레톤이 포함된 Meshy 기사 모델
+- `pirate.html`: 통통! 해적 룰렛의 독립 진입점
+- `src/pirate/main.js`, `src/pirate/engine.js`: 플레이어 설정·턴·라운드·점수와 게임 상태
+- `src/pirate/scene.js`, `src/pirate/config.js`: Three.js 통 장면, 칼 색상, GLB 모델과 16개 구멍 위치
+- `src/pirate/audio.js`, `src/pirate/style.css`: 효과음·음소거와 해적 룰렛 화면·반응형 레이아웃
+- `public/models/barrel.glb`, `pirate.glb`, `knife.glb`: 해적 룰렛의 3D 통·캐릭터·칼
+- `public/audio/knife-wood-insert.wav`: 칼을 통에 꽂을 때 재생하는 효과음
+- `docs/PIRATE_BARREL.md`: 해적 룰렛의 규칙과 배포 안내
 - `src/parry-api.js`, `public/api/parry.php`: PARRY 세션·랭킹 API와 서버 검증
 - `database/parry-v1.sql`: 기존 DB에 추가하는 PARRY 전용 랭킹 테이블
 - `public/api/index.php`: 프로필, 게임 시작·제출, 랭킹 API 라우트
