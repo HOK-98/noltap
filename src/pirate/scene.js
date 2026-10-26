@@ -153,8 +153,8 @@ export class PirateScene {
     const loader = new GLTFLoader(); const status = {};
     await Promise.all(Object.entries(MODELS).map(async ([name, config]) => {
       try {
-        // Missing GLBs use a complete, playable procedural preview.
-        const response = await fetch(config.url, { method: 'HEAD' }); if (!response.ok || response.headers.get('content-type')?.includes('text/html')) throw new Error('Model missing');
+        // Let GLTFLoader fetch the model directly. Some static hosts handle HEAD
+        // requests to .glb files inconsistently even when the model is available.
         const gltf = await loader.loadAsync(config.url); if (this.disposed) return;
         const wrapper = new THREE.Group(), model = gltf.scene; wrapper.add(model);
         model.updateMatrixWorld(true); const box = new THREE.Box3().setFromObject(model), size = box.getSize(new THREE.Vector3()), center = box.getCenter(new THREE.Vector3());
