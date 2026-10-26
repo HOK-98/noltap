@@ -2,7 +2,7 @@
 
 게임과 심심풀이·실용 도구를 모아 운영하는 놀탭(NOLTAP) 웹 포털입니다. 현재 **누르지 마!**, **PARRY: LAST BLADE**, **통통! 해적 룰렛**을 플레이할 수 있습니다. 포털은 `index.html`, 각 게임은 `parry.html`과 `pirate.html`에서 제공하며, 게임 화면·진행 로직·랭킹 API를 분리해 관리합니다.
 
-프런트엔드는 Vite 정적 빌드로 배포합니다. **누르지 마!**와 **PARRY**의 온라인 랭킹은 Hostinger의 PHP 8.2 이상과 MySQL/MariaDB를 사용합니다. **통통! 해적 룰렛**은 서버나 DB 없이 한 기기에서 2~8명이 함께 하는 로컬 패스 앤 플레이 게임입니다. 세 게임의 진행 로직은 화면 코드와 분리되어 있습니다. PARRY와 해적 룰렛은 Three.js로 만든 3D 장면을 사용합니다.
+프런트엔드는 Vite 정적 빌드로 배포합니다. **누르지 마!**와 **PARRY**의 온라인 랭킹은 Hostinger의 PHP 8.2 이상과 MySQL/MariaDB를 사용합니다. **통통! 해적 룰렛**은 한 기기에서 2~8명이 함께 하며 게임과 기록은 브라우저에서 처리합니다. DB는 사용하지 않고, 운영 사이트에서는 PHP 엔드포인트로 공개 3D 모델을 전달합니다. 세 게임의 진행 로직은 화면 코드와 분리되어 있습니다. PARRY와 해적 룰렛은 Three.js로 만든 3D 장면을 사용합니다.
 
 ## 로컬 실행
 
@@ -25,7 +25,7 @@ php -S 127.0.0.1:8000 -t public
 npm run dev
 ```
 
-Vite 개발 서버는 `/api` 요청을 PHP 개발 서버로 전달합니다. DB가 설정되지 않으면 누르지 마!와 PARRY의 서버 랭킹은 비활성화되고 두 게임은 로컬 기록으로 실행됩니다. 해적 룰렛은 PHP API를 사용하지 않습니다.
+Vite 개발 서버는 `/api` 요청을 PHP 개발 서버로 전달합니다. DB가 설정되지 않으면 누르지 마!와 PARRY의 서버 랭킹은 비활성화되고 두 게임은 로컬 기록으로 실행됩니다. 해적 룰렛의 로컬·GitHub Pages 미리보기는 GLB를 직접 불러옵니다. 운영 도메인(noltap.com)에서는 `api/pirate-model.php`가 공개 모델 세 개를 전달하며 DB 설정은 필요하지 않습니다.
 
 ## GitHub Pages 미리보기
 
@@ -140,6 +140,8 @@ Hostinger의 최신 절차는 [File Manager 안내](https://www.hostinger.com/su
 - `pirate.html`: 통통! 해적 룰렛의 독립 진입점
 - `src/pirate/main.js`, `src/pirate/engine.js`: 플레이어 설정·턴·라운드·점수와 게임 상태
 - `src/pirate/scene.js`, `src/pirate/config.js`: Three.js 통 장면, 칼 색상, GLB 모델과 16개 구멍 위치
+- `src/pirate/model-loader.js`: 다운로드·이미지 해석의 개별 제한시간, 모델 버퍼 재사용과 재시도
+- `public/api/pirate-model.php`: 허용된 통·해적·칼 모델만 전달하는 PHP 엔드포인트
 - `src/pirate/audio.js`, `src/pirate/style.css`: 효과음·음소거와 해적 룰렛 화면·반응형 레이아웃
 - `public/models/barrel.glb`, `pirate.glb`, `knife.glb`: 해적 룰렛의 3D 통·캐릭터·칼
 - `public/audio/knife-wood-insert.wav`: 칼을 통에 꽂을 때 재생하는 효과음
@@ -158,5 +160,3 @@ Hostinger의 최신 절차는 [File Manager 안내](https://www.hostinger.com/su
 ## 확장 방향
 
 게임 화면과 난이도 엔진, API가 파일별로 나뉘어 있어 새 게임을 허브에 추가할 수 있습니다. 업적·개인 기록·서버 랭킹과 텍스트/링크 공유를 지원합니다. 서버 DB를 설정하지 않아도 로컬로 플레이할 수 있으며, 이 경우 온라인 랭킹 제출은 사용할 수 없습니다.
-
-

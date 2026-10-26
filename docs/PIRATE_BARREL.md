@@ -1,6 +1,6 @@
 # 통통! 해적 룰렛 — 실행과 운영
 
-기존 놀탭 사이트에 추가한 세 번째 게임입니다. `/pirate.html`에서 실행됩니다. 초기 버전은 프론트엔드만 사용하며 MySQL 변경이나 PHP 설정이 필요하지 않습니다.
+기존 놀탭 사이트에 추가한 세 번째 게임입니다. `/pirate.html`에서 실행됩니다. 게임 규칙과 기록은 브라우저에서 처리하며 MySQL 변경은 필요하지 않습니다. 운영 도메인에서는 `api/pirate-model.php`가 공개 GLB 세 개를 JSON으로 전달합니다. 로컬·GitHub Pages 미리보기는 정적 GLB 파일을 직접 사용합니다.
 
 ## 실행
 
@@ -47,7 +47,7 @@ Meshy 웹에서 통·해적·칼을 생성하고 리메시·PBR 텍스처를 적
 
 ## Hostinger 배포
 
-`npm run build` 후 **dist 폴더 안의 전체 파일**을 `noltap.com/public_html`에 올립니다. 기존 두 게임과 PHP API도 같은 빌드에 포함되므로 `pirate.html`만 올리지 마세요. Node.js 상시 서버가 필요하지 않습니다. DB SQL은 바뀌지 않습니다.
+최초 설치는 `npm run build` 후 dist 내용을 사이트 문서 루트에 배포합니다. 이후 게임 수정은 새 `pirate.html`이 참조하는 JS/CSS와 그 의존 파일, 변경된 API 파일만 올릴 수 있습니다. 의존 파일을 먼저 업로드하고 HTML을 마지막에 교체하세요. 모델을 수정하지 않았다면 기존 GLB를 다시 덮어쓸 필요가 없습니다. `api/pirate-model.php`는 운영 사이트에 반드시 포함합니다. Node.js 상시 서버가 필요하지 않고 DB SQL은 바뀌지 않습니다.
 
 중요: 실제 서버에만 있는 `api/config.php`나 별도 인증 파일이 있으면 전체 교체 배포 전에 보존해야 합니다. 현재 프로젝트는 `config.example.php`만 포함합니다. 광고는 이 게임 플레이 화면에 넣지 않습니다.
 
