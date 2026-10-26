@@ -9,11 +9,18 @@
       const downloads = window.__pirateModelDownloads = new Map();
       for (const name of ['barrel', 'pirate', 'knife']) {
         const url = new URL(`./models/${name}.glb?v=20261027-bounded-load`, location.href).href;
+        const gateway = /^(www\.)?noltap\.com$/.test(location.hostname);
+        const source = gateway ? new URL(`./api/pirate-model.php?name=${name}&v=1`, location.href).href : url;
         const controller = new AbortController();
         const timer = setTimeout(() => controller.abort(), 12000);
-        const download = fetch(url, { signal: controller.signal }).then(response => {
+        const download = fetch(source, { signal: controller.signal }).then(async response => {
           if (!response.ok) throw new Error(`Model HTTP ${response.status}`);
-          return response.arrayBuffer();
+          if (!gateway) return response.arrayBuffer();
+          const payload = await response.json();
+          const binary = atob(payload.data);
+          const bytes = new Uint8Array(binary.length);
+          for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+          return bytes.buffer;
         }).finally(() => clearTimeout(timer));
         download.catch(() => {});
         downloads.set(url, download);

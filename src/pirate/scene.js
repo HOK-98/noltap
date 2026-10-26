@@ -93,7 +93,7 @@ export class PirateScene {
     const sun = new THREE.DirectionalLight('#fff1c9', 3.6); sun.position.set(-3, 7, 5); sun.castShadow = true; sun.shadow.mapSize.set(512, 512); sun.shadow.camera.left = -3; sun.shadow.camera.right = 3; sun.shadow.camera.top = 4; sun.shadow.camera.bottom = -2; sun.shadow.bias = -.002; this.scene.add(sun);
     const rim = new THREE.DirectionalLight('#8ce9ed', 2); rim.position.set(3, 3, -3); this.scene.add(rim);
     this.root = new THREE.Group(); this.scene.add(this.root); this.barrelRoot = new THREE.Group(); this.root.add(this.barrelRoot);
-    this.modelsReady = false; this.root.visible = false; this.modelStatus = Object.fromEntries(Object.keys(MODELS).map(name => [name, 'pending']));
+    this.modelsReady = false; this.root.visible = false; this.modelErrors = {}; this.modelStatus = Object.fromEntries(Object.keys(MODELS).map(name => [name, 'pending']));
     this.wood = woodTexture(); this.gold = material('#e9b655', .3, .65); this.iron = material('#4a4b4b', .35, .55);
     this.buildBarrel(); this.buildStage(); this.buildSlots();
     this.pirate = new THREE.Group(); this.pirate.add(piratePlaceholder()); this.pirate.position.set(...(MODELS.pirate.previewPosition || MODELS.pirate.position)); this.barrelRoot.add(this.pirate);
@@ -155,12 +155,19 @@ export class PirateScene {
     if (this.loadingModels || this.disposed) return;
     this.loadingModels = true;
     const loader = new GLTFLoader(), status = this.modelStatus;
+    // Use the browser image element decoder rather than a separate bitmap
+    // fetch/decode pipeline, which can stall on some graphics configurations.
+    loader.register(parser => {
+      parser.textureLoader = new THREE.TextureLoader(parser.options.manager);
+      parser.textureLoader.setCrossOrigin('anonymous');
+      return { name: 'NOLTAP_IMAGE_ELEMENT_TEXTURES' };
+    });
     const pending = Object.entries(MODELS).filter(([name]) => status[name] !== 'loaded');
     for (const [name] of pending) status[name] = 'loading';
     this.callbacks.models({ ...status });
     await Promise.all(pending.map(async ([name, config]) => {
       try {
-        const gltf = await loadModelFile(loader, config.url); if (this.disposed) return;
+        const gltf = await loadModelFile(loader, config.url, { decodeTimeoutMs: 30000 }); if (this.disposed) return;
         const wrapper = new THREE.Group(), model = gltf.scene; wrapper.add(model);
         model.updateMatrixWorld(true); const box = new THREE.Box3().setFromObject(model), size = box.getSize(new THREE.Vector3()), center = box.getCenter(new THREE.Vector3());
         const scale = config.height / Math.max(size.y, .001); model.scale.multiplyScalar(scale); model.position.set(-center.x * scale, -box.min.y * scale, -center.z * scale);
@@ -175,13 +182,13 @@ export class PirateScene {
           if (gltf.animations.length) { const mixer = new THREE.AnimationMixer(model); const clip = gltf.animations.find(a => a.name === config.animation) || gltf.animations[0]; mixer.clipAction(clip).play(); this.mixers.push(mixer); }
         } else { wrapper.position.set(...config.position); this.knifeTemplate = wrapper; }
         status[name] = 'loaded';
-      } catch (error) { status[name] = 'error'; console.warn(`Could not load pirate model: ${name}`, error); }
-      if (!this.disposed) this.callbacks.models({ ...status });
+      } catch (error) { status[name] = 'error'; this.modelErrors[name] = error.stage === 'decode' ? '이미지 해석' : '다운로드'; console.warn(`Could not load pirate model: ${name}`, error); }
+      if (!this.disposed) this.callbacks.models({ ...status }, { ...this.modelErrors });
     }));
     this.loadingModels = false;
     this.modelsReady = Object.values(status).every(state => state === 'loaded');
     this.root.visible = this.modelsReady;
-    if (!this.disposed) this.callbacks.models({ ...status });
+    if (!this.disposed) this.callbacks.models({ ...status }, { ...this.modelErrors });
   }
   installInteraction() {
     const canvas = this.renderer.domElement; this.drag = null;

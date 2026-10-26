@@ -31,3 +31,23 @@ test('stalled texture decoding is also bounded', { timeout: 1000 }, async () => 
   }), /timed out/);
   assert.equal(attempts, 2);
 });
+
+test('decoding has its own budget after a successful download', async () => {
+  const model = { scene: {} };
+  const actual = await loadModelFile({ parseAsync: () => new Promise(resolve => setTimeout(() => resolve(model), 30)) }, '/models/pirate.glb', {
+    timeoutMs: 10, decodeTimeoutMs: 200, fetchImpl: async () => response(),
+  });
+  assert.equal(actual, model);
+});
+
+test('reuses an early delivery buffer without downloading the model again', async () => {
+  const model = { scene: {} }, bytes = await response().arrayBuffer();
+  globalThis.__pirateModelDownloads = new Map([['http://localhost/models/pirate.glb', Promise.resolve(bytes)]]);
+  try {
+    const actual = await loadModelFile({ parseAsync: async () => model }, '/models/pirate.glb', {
+      fetchImpl: () => assert.fail('Buffer was already delivered'),
+    });
+    assert.equal(actual, model);
+    assert.equal(globalThis.__pirateModelDownloads.size, 0);
+  } finally { delete globalThis.__pirateModelDownloads; }
+});

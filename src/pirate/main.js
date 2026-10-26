@@ -187,11 +187,12 @@ for (const dialog of dialogs) dialog.addEventListener('close', sync);
 $('#result-dialog').addEventListener('cancel', event => event.preventDefault());
 document.addEventListener('visibilitychange', () => { paused = document.hidden; $('#pause-shade').hidden = !paused; if (paused) sound.stop(); sync(); });
 try {
-  scene = new PirateScene($('#scene'), $('#slot-labels'), { pick: id => pick(id), models: status => {
+  scene = new PirateScene($('#scene'), $('#slot-labels'), { pick: id => pick(id), models: (status, errors = {}) => {
     const states = Object.values(status), loaded = states.filter(state => state === 'loaded').length;
     modelsReady = loaded === 3;
     const waiting = states.some(state => state === 'pending' || state === 'loading');
-    const message = modelsReady ? 'Meshy 3D 모델 적용 · 통·해적·칼' : waiting ? `3D 모델을 불러오고 있어요 · ${loaded}/3 완료` : '모델을 불러오지 못했어요. 다시 시도해 주세요.';
+    const failed = Object.entries(errors).map(([name, step]) => `${{ barrel: '통', pirate: '해적', knife: '칼' }[name]}: ${step}`).join(', ');
+    const message = modelsReady ? 'Meshy 3D 모델 적용 · 통·해적·칼' : waiting ? `3D 모델을 불러오고 있어요 · ${loaded}/3 완료` : `모델을 불러오지 못했어요 (${failed}). 다시 시도해 주세요.`;
     $('#model-status').textContent = message;
     $('#scene').setAttribute('aria-busy', String(waiting));
     $('#scene-loading').hidden = modelsReady;
