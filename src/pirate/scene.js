@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { clone } from 'three/addons/utils/SkeletonUtils.js';
 import { COLORS, GAME, MODELS, SCENE, SLOTS } from './config.js';
+import { makeIndependentTexture } from './textures.js';
 
 const up = new THREE.Vector3(0, 1, 0), forward = new THREE.Vector3(0, 0, 1);
 const ease = t => 1 - (1 - t) ** 3;
@@ -39,10 +40,8 @@ function recolorGrip(source, hex) {
       }
     }
     ctx.putImageData(pixels, 0, 0);
-    const map = source.map.clone();
-    map.image = canvas;
+    const map = makeIndependentTexture(source.map, canvas);
     map.name = `knife-grip-${hex}`;
-    map.needsUpdate = true;
     return map;
   } catch {
     return null;
