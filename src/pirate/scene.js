@@ -3,6 +3,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { clone } from 'three/addons/utils/SkeletonUtils.js';
 import { COLORS, GAME, MODELS, SCENE, SLOTS } from './config.js';
 import { makeIndependentTexture } from './textures.js';
+import { loadModelFile } from './model-loader.js';
 
 const up = new THREE.Vector3(0, 1, 0), forward = new THREE.Vector3(0, 0, 1);
 const ease = t => 1 - (1 - t) ** 3;
@@ -86,12 +87,13 @@ export class PirateScene {
     this.scene = new THREE.Scene(); this.camera = new THREE.PerspectiveCamera(35, 1, .1, 50); this.camera.position.set(0, 3.45, 6.7); this.camera.lookAt(0, 1.35, 0);
     this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'high-performance' });
     this.renderer.setClearColor(0x000000, 0); this.renderer.outputColorSpace = THREE.SRGBColorSpace; this.renderer.toneMapping = THREE.ACESFilmicToneMapping; this.renderer.toneMappingExposure = 1.35;
-    this.renderer.shadowMap.enabled = true; this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    this.renderer.shadowMap.enabled = true; this.renderer.shadowMap.type = THREE.PCFShadowMap;
     this.renderer.domElement.setAttribute('aria-label', '3D 해적 통. 구멍을 눌러 칼을 꽂거나 드래그로 회전하세요.'); host.prepend(this.renderer.domElement);
     this.scene.add(new THREE.HemisphereLight('#f2f8ff', '#94714c', 2.8));
     const sun = new THREE.DirectionalLight('#fff1c9', 3.6); sun.position.set(-3, 7, 5); sun.castShadow = true; sun.shadow.mapSize.set(512, 512); sun.shadow.camera.left = -3; sun.shadow.camera.right = 3; sun.shadow.camera.top = 4; sun.shadow.camera.bottom = -2; sun.shadow.bias = -.002; this.scene.add(sun);
     const rim = new THREE.DirectionalLight('#8ce9ed', 2); rim.position.set(3, 3, -3); this.scene.add(rim);
     this.root = new THREE.Group(); this.scene.add(this.root); this.barrelRoot = new THREE.Group(); this.root.add(this.barrelRoot);
+    this.modelsReady = false; this.root.visible = false; this.modelStatus = Object.fromEntries(Object.keys(MODELS).map(name => [name, 'pending']));
     this.wood = woodTexture(); this.gold = material('#e9b655', .3, .65); this.iron = material('#4a4b4b', .35, .55);
     this.buildBarrel(); this.buildStage(); this.buildSlots();
     this.pirate = new THREE.Group(); this.pirate.add(piratePlaceholder()); this.pirate.position.set(...(MODELS.pirate.previewPosition || MODELS.pirate.position)); this.barrelRoot.add(this.pirate);
@@ -150,12 +152,15 @@ export class PirateScene {
     this.renderer.setSize(w, h); this.camera.aspect = w / h; this.camera.position.z = this.camera.aspect < .95 ? 8.2 : 6.7; this.camera.updateProjectionMatrix();
   }
   async loadModels() {
-    const loader = new GLTFLoader(); const status = {};
-    await Promise.all(Object.entries(MODELS).map(async ([name, config]) => {
+    if (this.loadingModels || this.disposed) return;
+    this.loadingModels = true;
+    const loader = new GLTFLoader(), status = this.modelStatus;
+    const pending = Object.entries(MODELS).filter(([name]) => status[name] !== 'loaded');
+    for (const [name] of pending) status[name] = 'loading';
+    this.callbacks.models({ ...status });
+    await Promise.all(pending.map(async ([name, config]) => {
       try {
-        // Let GLTFLoader fetch the model directly. Some static hosts handle HEAD
-        // requests to .glb files inconsistently even when the model is available.
-        const gltf = await loader.loadAsync(config.url); if (this.disposed) return;
+        const gltf = await loadModelFile(loader, config.url); if (this.disposed) return;
         const wrapper = new THREE.Group(), model = gltf.scene; wrapper.add(model);
         model.updateMatrixWorld(true); const box = new THREE.Box3().setFromObject(model), size = box.getSize(new THREE.Vector3()), center = box.getCenter(new THREE.Vector3());
         const scale = config.height / Math.max(size.y, .001); model.scale.multiplyScalar(scale); model.position.set(-center.x * scale, -box.min.y * scale, -center.z * scale);
@@ -170,9 +175,13 @@ export class PirateScene {
           if (gltf.animations.length) { const mixer = new THREE.AnimationMixer(model); const clip = gltf.animations.find(a => a.name === config.animation) || gltf.animations[0]; mixer.clipAction(clip).play(); this.mixers.push(mixer); }
         } else { wrapper.position.set(...config.position); this.knifeTemplate = wrapper; }
         status[name] = 'loaded';
-      } catch { status[name] = 'placeholder'; }
+      } catch (error) { status[name] = 'error'; console.warn(`Could not load pirate model: ${name}`, error); }
+      if (!this.disposed) this.callbacks.models({ ...status });
     }));
-    if (!this.disposed) this.callbacks.models(status);
+    this.loadingModels = false;
+    this.modelsReady = Object.values(status).every(state => state === 'loaded');
+    this.root.visible = this.modelsReady;
+    if (!this.disposed) this.callbacks.models({ ...status });
   }
   installInteraction() {
     const canvas = this.renderer.domElement; this.drag = null;
@@ -203,7 +212,7 @@ export class PirateScene {
     anchor.getWorldPosition(this.worldPos); anchor.getWorldQuaternion(this._quat ||= new THREE.Quaternion()); this.worldNormal.copy(forward).applyQuaternion(this._quat);
     this.cameraDirection.copy(this.camera.position).sub(this.worldPos).normalize(); return this.worldNormal.dot(this.cameraDirection) > .27;
   }
-  setInput(enabled, used) { this.canPick = enabled; this.used = new Set(used); }
+  setInput(enabled, used) { this.canPick = enabled && this.modelsReady; this.used = new Set(used); }
   rotate(direction) { this.targetRotation += direction * Math.PI / 4; }
   faceSlot(id) { this.targetRotation = -Math.atan2(SLOTS[id].normal[0], SLOTS[id].normal[2]); this.rotation = this.targetRotation; }
   tween(ms, update) {
@@ -246,6 +255,7 @@ export class PirateScene {
   }
   frame(timestamp) {
     this.frameId = null; if (this.disposed || document.hidden) { this.lastFrame = 0; return; }
+    if (!this.modelsReady) { this.lastFrame = 0; this.frameId = requestAnimationFrame(this.frame); return; }
     const delta = this.lastFrame ? (timestamp - this.lastFrame) / 1000 : 0; this.lastFrame = timestamp; this.time += delta;
     this.rotation += (this.targetRotation - this.rotation) * (1 - Math.exp(-delta * 12)); this.barrelRoot.rotation.y = this.rotation;
     const shakeAge = this.time - (this.shakeAt ?? -2); this.barrelRoot.rotation.z = shakeAge < .28 ? Math.sin(shakeAge * 90) * this.shakeStrength * (1 - shakeAge / .28) : 0;

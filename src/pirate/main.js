@@ -24,7 +24,7 @@ settings.sound = settings.sound !== false;
 let roster = validRoster(settings.players), draftRoster = roster.map(player => ({ ...player }));
 let record = read(RECORD_KEY, { matches: 0, bestScore: 0 });
 const game = new PirateGame(randomInt, roster), sound = new PirateSound(settings.sound);
-let scene, token = 0, paused = false, roundBusy = false, recorded = false;
+let scene, modelsReady = false, token = 0, paused = false, roundBusy = false, recorded = false;
 const root = document.querySelector('#pirate-app');
 root.innerHTML = `
   <main class="pirate-game">
@@ -53,7 +53,7 @@ root.innerHTML = `
       <div class="command-row"><div class="parchment command-message" role="status" aria-live="polite"><span aria-hidden="true">☸</span><p id="instruction">참가자를 설정하고 게임을 시작하세요!</p><small id="instruction-sub">함정은 하나, 한 번에 한 명씩 돌아가며 칼을 꽂아요.</small></div><button class="chunky-button setup-button" id="setup-open"><span>♟</span> 참가자 설정</button><button class="chunky-button restart-button" id="restart"><span>↻</span> 다시 시작</button><button class="chunky-button sound-button" id="sound"><span>♫</span> 효과음 ON</button></div>
     </section>
     <footer class="pirate-footer"><span id="model-status">3D 모델 불러오는 중</span><span>© 2026 NOLTAP <i>✦</i> <a href="./privacy.html">개인정보처리방침</a></span></footer>
-    <dialog id="setup-dialog" class="pirate-dialog setup-dialog"><div class="modal-inner"><span class="result-eyebrow">PASS & PLAY · 2–8 PLAYERS</span><h2>해적단을 모아라!</h2><p>참가 인원과 각자 사용할 칼 색을 정하세요. 다른 색을 골라야 플레이어별 칼을 구분하기 쉬워요.</p><label class="setup-count">참가 인원<select id="setup-count">${Array.from({ length: 7 }, (_, i) => `<option value="${i + 2}">${i + 2}명</option>`).join('')}</select></label><div id="setup-player-list" class="setup-player-list"></div><button class="chunky-button next-button" id="setup-start">이 인원으로 시작 →</button><button class="reset-record" id="setup-cancel" hidden>계속 진행 중인 게임으로</button></div></dialog>
+    <dialog id="setup-dialog" class="pirate-dialog setup-dialog"><div class="modal-inner"><span class="result-eyebrow">PASS & PLAY · 2–8 PLAYERS</span><h2>해적단을 모아라!</h2><p>참가 인원과 각자 사용할 칼 색을 정하세요. 다른 색을 골라야 플레이어별 칼을 구분하기 쉬워요.</p><label class="setup-count">참가 인원<select id="setup-count">${Array.from({ length: 7 }, (_, i) => `<option value="${i + 2}">${i + 2}명</option>`).join('')}</select></label><div id="setup-player-list" class="setup-player-list"></div><p id="setup-loading" role="status">3D 모델을 준비하고 있어요.</p><button id="setup-retry" class="reset-record" type="button" data-retry-models hidden>모델 다시 불러오기</button><button class="chunky-button next-button" id="setup-start" disabled>이 인원으로 시작 →</button><button class="reset-record" id="setup-cancel" hidden>계속 진행 중인 게임으로</button></div></dialog>
     <dialog id="result-dialog" class="pirate-dialog"><div class="modal-inner"><span class="result-eyebrow" id="result-eyebrow">ROUND COMPLETE</span><div class="result-symbol" id="result-symbol">✦</div><h2 id="result-title"></h2><p id="result-description"></p><div class="result-scores" id="result-scores"></div><p class="result-note" id="result-note"></p><button class="chunky-button next-button" id="next-round">다음 라운드 →</button><div class="modal-links"><button id="result-restart">처음부터 다시</button><a href="./index.html#games">게임 모음으로</a></div></div></dialog>
     <dialog id="help-dialog" class="pirate-dialog help-dialog"><div class="modal-inner"><span class="result-eyebrow">A LITTLE COURAGE, A LITTLE LUCK</span><h2>통통! 해적 룰렛</h2><ol class="rules"><li><b>2~8명이 한 기기에서 번갈아!</b> 참가 인원과 이름, 각자 다른 칼 색을 정해요.</li><li><b>내 차례에 구멍을 골라요.</b> 안전하면 20점, 드래그하거나 회전 버튼으로 통 뒤쪽도 볼 수 있어요.</li><li><b>함정은 단 하나.</b> 걸린 사람은 라운드에서 패배하고, 나머지는 생존 보너스 100점을 받아요.</li><li><b>10라운드 총점으로 승부!</b> 라운드마다 시작 순서를 바꾸고, 최종 점수가 가장 높은 사람이 우승해요.</li></ol><p class="help-fair">칼 색깔은 각 참가자를 구분하기 위한 표시예요. 색에 따라 확률이 달라지지 않습니다.</p><div class="local-record"><span>이 브라우저의 전적</span><strong id="record-summary"></strong><small id="record-best"></small></div><details class="accessible-slots"><summary>키보드·보조기술용 구멍 목록</summary><p>아직 사용하지 않은 번호를 선택하세요. 3D 화면과 같은 구멍입니다.</p><div id="accessible-slots">${Array.from({ length: 16 }, (_, i) => `<button data-slot="${i}" aria-label="구멍 ${i + 1}에 칼 꽂기">${i + 1}</button>`).join('')}</div></details><button class="chunky-button next-button" id="help-close">알겠어요! 돌아가기</button><button class="reset-record" id="clear-record">이 브라우저 전적 초기화</button></div></dialog>
     <dialog id="confirm-dialog" class="pirate-dialog"><div class="modal-inner"><span class="result-eyebrow">NEW ADVENTURE</span><h2 id="confirm-title"></h2><p id="confirm-text"></p><button class="chunky-button next-button" id="confirm-yes">초기화하기</button><button class="reset-record" id="confirm-no">취소하고 돌아가기</button></div></dialog>
@@ -78,12 +78,13 @@ function sync() {
   $('#round').textContent = game.round; $('#player-count').textContent = `${roster.length}명`;
   $('#remaining').textContent = $('#remaining-label').textContent = game.available().length;
   $('#round-chip').innerHTML = `ROUND ${String(game.round).padStart(2, '0')} <span>${escapeHTML(current.name)} 차례</span>`;
-  const input = game.phase === 'ready' && !paused && (!busyModal() || $('#help-dialog').open) && !roundBusy;
+  const input = modelsReady && game.phase === 'ready' && !paused && (!busyModal() || $('#help-dialog').open) && !roundBusy;
   scene?.setInput(input, game.used.keys());
   renderPlayerChips();
   const accessibleInput = input;
   root.querySelectorAll('[data-slot]').forEach(button => { button.disabled = !accessibleInput || game.used.has(Number(button.dataset.slot)); });
   $('#help-open').disabled = $('#restart').disabled = $('#setup-open').disabled = game.phase === 'inserting' || roundBusy;
+  $('#setup-start').disabled = !modelsReady;
   $('#sound').innerHTML = `<span>${settings.sound ? '♫' : '♪'}</span> 효과음 ${settings.sound ? 'ON' : 'OFF'}`; $('#sound').setAttribute('aria-label', settings.sound ? '효과음 끄기' : '효과음 켜기');
   $('#record-summary').textContent = `${record.matches}회 플레이`;
   $('#record-best').textContent = `개인 최고 참가자 점수 ${Number(record.bestScore || 0).toLocaleString('ko-KR')}점`;
@@ -111,6 +112,7 @@ function adjustPlayerCount(count) {
   draftRoster = draftRoster.slice(0, count); renderSetupDraft();
 }
 function startConfiguredGame() {
+  if (!modelsReady) return;
   readDraftNames();
   const colors = draftRoster.map(player => player.color);
   if (new Set(colors).size !== colors.length) { say('플레이어마다 다른 칼 색을 골라주세요.'); return; }
@@ -121,7 +123,7 @@ function startConfiguredGame() {
   say(`${roster.length}인 해적 룰렛 시작!`, `${roster[0].name}부터 시작해요. 각자 자기 칼 색으로 차례를 표시해요.`); sound.unlock(); sound.play('select');
 }
 async function pick(id, playerIndex = game.turnIndex) {
-  if (paused || roundBusy || (busyModal() && !$('#help-dialog').open)) return;
+  if (!modelsReady || paused || roundBusy || (busyModal() && !$('#help-dialog').open)) return;
   if ($('#help-dialog').open) $('#help-dialog').close();
   const player = roster[playerIndex]; if (!player) return;
   sound.unlock(); const run = token, color = player.color;
@@ -186,13 +188,26 @@ $('#result-dialog').addEventListener('cancel', event => event.preventDefault());
 document.addEventListener('visibilitychange', () => { paused = document.hidden; $('#pause-shade').hidden = !paused; if (paused) sound.stop(); sync(); });
 try {
   scene = new PirateScene($('#scene'), $('#slot-labels'), { pick: id => pick(id), models: status => {
-    const loaded = Object.values(status).filter(state => state === 'loaded').length; $('#model-status').textContent = loaded === 3 ? 'Meshy 3D 모델 적용 · 통·해적·칼' : `임시 3D 모델로 플레이 중 · GLB ${loaded}/3 적용`;
+    const states = Object.values(status), loaded = states.filter(state => state === 'loaded').length;
+    modelsReady = loaded === 3;
+    const waiting = states.some(state => state === 'pending' || state === 'loading');
+    const message = modelsReady ? 'Meshy 3D 모델 적용 · 통·해적·칼' : waiting ? `3D 모델을 불러오고 있어요 · ${loaded}/3 완료` : '모델을 불러오지 못했어요. 다시 시도해 주세요.';
+    $('#model-status').textContent = message;
+    $('#scene').setAttribute('aria-busy', String(waiting));
+    $('#scene-loading').hidden = modelsReady;
+    if (!modelsReady) $('#scene-loading').innerHTML = `<strong>${message}</strong>${waiting ? '<p>통과 해적, 칼을 준비하고 있어요.</p>' : '<button type="button" class="reset-record" data-retry-models>모델 다시 불러오기</button>'}`;
+    $('#setup-loading').hidden = modelsReady; $('#setup-loading').textContent = message;
+    $('#setup-retry').hidden = waiting || modelsReady;
+    $('#setup-start').textContent = modelsReady ? '이 인원으로 시작 →' : waiting ? '3D 모델 준비 중…' : '모델을 다시 불러와 주세요';
+    sync();
   } });
-  $('#scene-loading').hidden = true;
 } catch (error) {
+  modelsReady = true;
+  $('#setup-loading').hidden = true;
   $('#scene-loading').innerHTML = '<strong>3D 화면을 열 수 없어요.</strong><p>브라우저의 그래픽 가속을 확인해주세요.<br>아래 번호 버튼으로도 동일한 게임을 즐길 수 있어요.</p><div class="fallback-slots"></div>';
   $('#scene').classList.add('fallback-mode'); $('#model-status').textContent = '3D 사용 불가 · 번호 선택 모드';
   for (let id = 0; id < GAME.slots; id++) { const button = document.createElement('button'); button.dataset.slot = id; button.textContent = id + 1; button.setAttribute('aria-label', `구멍 ${id + 1}에 칼 꽂기`); button.addEventListener('click', () => pick(id)); $('.fallback-slots').append(button); }
 }
+root.addEventListener('click', event => { if (event.target.closest('[data-retry-models]')) scene?.loadModels(); });
 window.addEventListener('pagehide', event => { if (!event.persisted) { token++; scene?.dispose(); sound.stop(); } });
 renderSetupDraft(); sync(); $('#setup-cancel').hidden = true; $('#setup-dialog').showModal();
