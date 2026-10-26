@@ -134,3 +134,6 @@ body { background:radial-gradient(ellipse at 38% 0,#192027 0,transparent 57%),#0
   .parry-is-playing .parry-combat-data { gap:18px; }
   .parry-is-playing .parry-dpad { opacity:1; }.parry-is-playing .parry-dpad button { background:#0a1019e6; }
 }
+.rankings-disabled .parry-board { display: none !important; }
+
+

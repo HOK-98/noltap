@@ -27,6 +27,12 @@ npm run dev
 
 Vite 개발 서버는 `/api` 요청을 PHP 개발 서버로 전달합니다. DB가 설정되지 않으면 누르지 마!와 PARRY의 서버 랭킹은 비활성화되고 두 게임은 로컬 기록으로 실행됩니다. 해적 룰렛은 PHP API를 사용하지 않습니다.
 
+## GitHub Pages 미리보기
+
+GitHub 저장소의 **Settings → Pages → Build and deployment → Source**에서 `GitHub Actions`를 선택하면 `.github/workflows/pages.yml`이 `main`에 올라올 때마다 정적 미리보기를 빌드하고 배포합니다. 공개 주소는 `https://hok-98.github.io/noltap/`입니다.
+
+미리보기 빌드는 `/noltap/` 경로와 일치하도록 자산 경로를 맞추고 PHP API 파일을 제외합니다. 누르지 마!와 PARRY는 로컬 모드로 플레이할 수 있으며, 온라인 랭킹은 표시되지 않습니다. 개인 기록은 해당 브라우저에 저장됩니다. 전체 랭킹 기능은 Hostinger의 `https://noltap.com/`에서 사용할 수 있습니다.
+
 ## DB 만들기
 
 1. Hostinger hPanel에서 MySQL 데이터베이스와 사용자를 만들고 해당 사용자에게 DB 권한을 부여합니다.

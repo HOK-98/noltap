@@ -1,6 +1,7 @@
 import { getPlayerIdentity, saveNickname } from './ranking-api.js';
 
 const ENDPOINT = '/api/parry.php';
+const RANKING_DISABLED = import.meta.env.VITE_DISABLE_RANKING === 'true';
 
 export function parryPlayer() {
   return getPlayerIdentity();
@@ -11,11 +12,13 @@ export function saveParryNickname(value) {
 }
 
 export async function parryGet(action, params = {}) {
+  if (RANKING_DISABLED) throw new Error('온라인 랭킹은 GitHub Pages 미리보기에서 제외되어 있습니다.');
   const query = new URLSearchParams({ action, ...params });
   return parryRequest(`${ENDPOINT}?${query.toString()}`, { method: 'GET' });
 }
 
 export async function parryPost(action, payload = {}, keepalive = false) {
+  if (RANKING_DISABLED) throw new Error('온라인 랭킹은 GitHub Pages 미리보기에서 제외되어 있습니다.');
   return parryRequest(`${ENDPOINT}?action=${encodeURIComponent(action)}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -47,3 +50,4 @@ async function parryRequest(url, options) {
   }
   return data;
 }
+

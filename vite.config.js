@@ -1,6 +1,9 @@
 import { defineConfig } from 'vite';
 
+const githubPages = process.env.GITHUB_PAGES === 'true';
+
 export default defineConfig({
+  base: githubPages ? '/noltap/' : '/',
   server: {
     proxy: {
       '/api': {
@@ -22,3 +25,4 @@ export default defineConfig({
     },
   },
 });
+

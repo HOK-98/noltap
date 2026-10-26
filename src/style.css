@@ -304,3 +304,8 @@ button { -webkit-user-select: none; user-select: none; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+.rankings-disabled .leaderboard-panel,
+.rankings-disabled .result-rank-row,
+.rankings-disabled .parry-board { display: none !important; }
+
+

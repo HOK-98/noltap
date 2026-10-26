@@ -1,4 +1,7 @@
 const NICKNAME_STORAGE = 'playbox-nickname-v1';
+const RANKING_DISABLED = import.meta.env.VITE_DISABLE_RANKING === 'true';
+
+if (RANKING_DISABLED) document.documentElement.classList.add('rankings-disabled');
 
 export function getPlayerIdentity() {
   let nickname = '플레이어';
@@ -15,11 +18,13 @@ export function saveNickname(nickname) {
 }
 
 export async function apiGet(action, params = {}) {
+  if (RANKING_DISABLED) throw new Error('온라인 랭킹은 GitHub Pages 미리보기에서 제외되어 있습니다.');
   const query = new URLSearchParams({ action, ...params });
   return request(`/api/index.php?${query.toString()}`, { method: 'GET' });
 }
 
 export async function apiPost(action, payload = {}, requestOptions = {}) {
+  if (RANKING_DISABLED) throw new Error('온라인 랭킹은 GitHub Pages 미리보기에서 제외되어 있습니다.');
   return request(`/api/index.php?action=${encodeURIComponent(action)}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -46,3 +51,4 @@ async function request(url, options) {
   }
   return result;
 }
+
