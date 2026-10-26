@@ -208,6 +208,6 @@ try {
   $('#scene').classList.add('fallback-mode'); $('#model-status').textContent = '3D 사용 불가 · 번호 선택 모드';
   for (let id = 0; id < GAME.slots; id++) { const button = document.createElement('button'); button.dataset.slot = id; button.textContent = id + 1; button.setAttribute('aria-label', `구멍 ${id + 1}에 칼 꽂기`); button.addEventListener('click', () => pick(id)); $('.fallback-slots').append(button); }
 }
-root.addEventListener('click', event => { if (event.target.closest('[data-retry-models]')) scene?.loadModels(); });
+root.addEventListener('click', event => { if (event.target.closest('[data-retry-models]')) window.location.reload(); });
 window.addEventListener('pagehide', event => { if (!event.persisted) { token++; scene?.dispose(); sound.stop(); } });
 renderSetupDraft(); sync(); $('#setup-cancel').hidden = true; $('#setup-dialog').showModal();
