@@ -7,3 +7,6 @@
 .parry-site-footer { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; border-top:1px solid #ffffff16; padding:20px 4px; color:#8d918e; font:10px/1.8 system-ui,sans-serif; }
 .parry-is-playing .parry-site-footer { display:none; }
 @media(max-width:600px) { .site-links { gap:8px 18px; }.site-footer,.parry-site-footer { align-items:flex-start; flex-direction:column; }.site-links a { font-size:11px; } }
+.noltap-icon { display:inline-block; flex:none; width:36px; height:36px; object-fit:contain; vertical-align:middle; }
+.info-brand,.parry-back,.pirate-nav>a { display:inline-flex; align-items:center; gap:8px; }
+.parry-back .noltap-icon,.pirate-nav .noltap-icon { width:28px; height:28px; }

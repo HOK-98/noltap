@@ -53,7 +53,7 @@ function emptyModel() {
 export function mountParryGame(root, { onExit = () => {} } = {}) {
   root.innerHTML = `
     <div class="parry-page">
-      <header class="parry-bar"><a class="parry-back" href="./index.html#games">← <span>NOLTAP</span></a><span class="parry-bar-title">PARRY <i>·</i> LAST BLADE</span><button class="parry-sound" type="button" aria-label="효과음 끄기">♫</button></header>
+      <header class="parry-bar"><a class="parry-back" href="./index.html#games">← <img class="noltap-icon" src="./icons/logo.webp" width="32" height="32" alt="" /><span>NOLTAP</span></a><span class="parry-bar-title">PARRY <i>·</i> LAST BLADE</span><button class="parry-sound" type="button" aria-label="효과음 끄기">♫</button></header>
       <section class="parry-lobby">
         <div class="parry-lobby-main">
           <img class="parry-lobby-art" src="./images/parry-card.webp" alt="" aria-hidden="true" decoding="async">

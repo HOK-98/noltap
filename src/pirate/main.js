@@ -29,7 +29,7 @@ const root = document.querySelector('#pirate-app');
 root.innerHTML = `
   <main class="pirate-game">
     <div class="harbor-scenery" aria-hidden="true"></div><div class="ship-deck" aria-hidden="true"></div>
-    <nav class="pirate-nav"><a href="./index.html#games">← <b>NOLTAP</b> <span>게임 모음</span></a><span>GAME 03 <i>✦</i> LUCK & LAUGHTER</span><button id="help-open" aria-label="게임 방법 보기">게임 방법 ⓘ</button></nav>
+    <nav class="pirate-nav"><a href="./index.html#games">← <img class="noltap-icon" src="./icons/logo.webp" width="32" height="32" alt="" /><b>NOLTAP</b> <span>게임 모음</span></a><span>GAME 03 <i>✦</i> LUCK & LAUGHTER</span><button id="help-open" aria-label="게임 방법 보기">게임 방법 ⓘ</button></nav>
     <header class="game-masthead">
       <div class="pirate-logo"><span class="logo-hat" aria-hidden="true">☠</span><span class="logo-bounce">통통!</span><h1>해적 <em>룰렛</em></h1><small>PIRATE BARREL</small></div>
       <div class="score-board wood-panel" aria-label="현재 게임 상황">

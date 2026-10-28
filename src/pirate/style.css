@@ -171,3 +171,5 @@
   .setup-color span { font-size:11px; }
   .player-knife>small { font-size:10px; }
 }
+.pirate-nav .noltap-icon { display:inline-block; width:28px; height:28px; object-fit:contain; flex:none; }
+.pirate-nav>a { display:inline-flex; align-items:center; gap:7px; }

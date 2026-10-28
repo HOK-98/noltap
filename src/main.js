@@ -90,7 +90,7 @@ app.innerHTML = `
   <div class="site-shell">
     <header class="topbar">
       <a class="brand" href="#home" aria-label="놀탭 홈">
-        <span class="brand-mark"><span></span><span></span><span></span></span>
+        <img class="noltap-icon" src="./icons/logo.webp" width="36" height="36" alt="" />
         <span class="brand-name">NOL<span>TAP</span></span>
       </a>
       <nav class="main-nav" aria-label="주 메뉴">
