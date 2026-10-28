@@ -1,5 +1,5 @@
-export const GAME = { slots: 16, rounds: 10, safePoints: 20, winPoints: 100, insertMs: 430, thinkMinMs: 700, thinkMaxMs: 1300, popMs: 1450 };
-const modelUrl = (name) => `${import.meta.env.BASE_URL}models/${name}?v=20261027-bounded-load`;
+export const GAME = { slots: 16, insertMs: 430, thinkMinMs: 700, thinkMaxMs: 1300, popMs: 1450 };
+const modelUrl = (name) => `${(import.meta.env?.BASE_URL || './')}models/${name}?v=20261027-bounded-load`;
 export const COLORS = [
   ['red', '빨강', '#ed5149'], ['blue', '파랑', '#269ee9'], ['yellow', '노랑', '#ffce3f'], ['green', '초록', '#63bf53'],
   ['purple', '보라', '#9a6de5'], ['pink', '분홍', '#ed79af'], ['orange', '주황', '#f69c37'], ['black', '검정', '#424d5a'],

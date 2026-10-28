@@ -22,27 +22,27 @@ function escapeHTML(value) { return String(value).replace(/[&<>"']/g, char => ({
 let settings = read(SETTINGS_KEY, { sound: true, players: defaultPlayers() });
 settings.sound = settings.sound !== false;
 let roster = validRoster(settings.players), draftRoster = roster.map(player => ({ ...player }));
-let record = read(RECORD_KEY, { matches: 0, bestScore: 0 });
+let record = read(RECORD_KEY, { matches: 0 });
 const game = new PirateGame(randomInt, roster), sound = new PirateSound(settings.sound);
 let scene, modelsReady = false, token = 0, paused = false, roundBusy = false, recorded = false;
 const root = document.querySelector('#pirate-app');
 root.innerHTML = `
   <main class="pirate-game">
     <div class="harbor-scenery" aria-hidden="true"></div><div class="ship-deck" aria-hidden="true"></div>
-    <nav class="pirate-nav"><a href="./index.html#games">← <b>NOLTAP</b> <span>게임 모음</span></a><span>GAME 03 <i>✦</i> LUCK & LAUGHTER</span><button id="help-open" aria-label="게임 방법과 전적 보기">게임 방법 ⓘ</button></nav>
+    <nav class="pirate-nav"><a href="./index.html#games">← <b>NOLTAP</b> <span>게임 모음</span></a><span>GAME 03 <i>✦</i> LUCK & LAUGHTER</span><button id="help-open" aria-label="게임 방법 보기">게임 방법 ⓘ</button></nav>
     <header class="game-masthead">
       <div class="pirate-logo"><span class="logo-hat" aria-hidden="true">☠</span><span class="logo-bounce">통통!</span><h1>해적 <em>룰렛</em></h1><small>PIRATE BARREL</small></div>
-      <div class="score-board wood-panel" aria-label="현재 게임 점수판">
+      <div class="score-board wood-panel" aria-label="현재 게임 상황">
         <div><span class="score-icon">⚔</span><p>현재 차례<strong id="turn-owner">플레이어 1</strong></p></div>
-        <div><span class="score-icon wheel">☸</span><p>라운드<strong><span id="round">1</span><small> / 10</small></strong></p></div>
+        <div><span class="score-icon wheel">☸</span><p>게임 방식<strong class="mode-label">한 판 승부</strong></p></div>
         <div><span class="score-icon">♟</span><p>참가 인원<strong id="player-count">2명</strong></p></div>
         <div><span class="score-icon skull">☠</span><p>남은 칼<strong id="remaining">16</strong></p></div>
       </div>
     </header>
     <section class="duel-arena" aria-label="참가자와 해적 룰렛">
-      <div class="players-strip" id="players-strip" aria-label="참가자별 점수"></div>
+      <div class="players-strip" id="players-strip" aria-label="참가자와 현재 차례"></div>
       <div class="barrel-stage">
-        <div class="round-chip" id="round-chip">ROUND 01 <span>플레이어 1 시작</span></div>
+        <div class="round-chip" id="round-chip">한 판 승부 <span>플레이어 1 시작</span></div>
         <div id="scene" class="scene-host"><div id="slot-labels" class="slot-labels"></div><div class="scene-loading" id="scene-loading">항구에 도착하는 중…</div></div>
         <div class="rotate-controls"><button id="rotate-left" aria-label="통을 왼쪽으로 회전">↶</button><span>드래그해서 통 돌리기</span><button id="rotate-right" aria-label="통을 오른쪽으로 회전">↷</button></div>
         <span class="remaining-chip">남은 구멍 <b id="remaining-label">16</b><span>/ 16</span></span>
@@ -54,8 +54,8 @@ root.innerHTML = `
     </section>
     <footer class="pirate-footer"><span id="model-status">3D 모델 불러오는 중</span><span>© 2026 NOLTAP <i>✦</i> <a href="./privacy.html">개인정보처리방침</a></span></footer>
     <dialog id="setup-dialog" class="pirate-dialog setup-dialog"><div class="modal-inner"><span class="result-eyebrow">PASS & PLAY · 2–8 PLAYERS</span><h2>해적단을 모아라!</h2><p>참가 인원과 각자 사용할 칼 색을 정하세요. 다른 색을 골라야 플레이어별 칼을 구분하기 쉬워요.</p><label class="setup-count">참가 인원<select id="setup-count">${Array.from({ length: 7 }, (_, i) => `<option value="${i + 2}">${i + 2}명</option>`).join('')}</select></label><div id="setup-player-list" class="setup-player-list"></div><p id="setup-loading" role="status">3D 모델을 준비하고 있어요.</p><button id="setup-retry" class="reset-record" type="button" data-retry-models hidden>모델 다시 불러오기</button><button class="chunky-button next-button" id="setup-start" disabled>이 인원으로 시작 →</button><button class="reset-record" id="setup-cancel" hidden>계속 진행 중인 게임으로</button></div></dialog>
-    <dialog id="result-dialog" class="pirate-dialog"><div class="modal-inner"><span class="result-eyebrow" id="result-eyebrow">ROUND COMPLETE</span><div class="result-symbol" id="result-symbol">✦</div><h2 id="result-title"></h2><p id="result-description"></p><div class="result-scores" id="result-scores"></div><p class="result-note" id="result-note"></p><button class="chunky-button next-button" id="next-round">다음 라운드 →</button><div class="modal-links"><button id="result-restart">처음부터 다시</button><a href="./index.html#games">게임 모음으로</a></div></div></dialog>
-    <dialog id="help-dialog" class="pirate-dialog help-dialog"><div class="modal-inner"><span class="result-eyebrow">A LITTLE COURAGE, A LITTLE LUCK</span><h2>통통! 해적 룰렛</h2><ol class="rules"><li><b>2~8명이 한 기기에서 번갈아!</b> 참가 인원과 이름, 각자 다른 칼 색을 정해요.</li><li><b>내 차례에 구멍을 골라요.</b> 안전하면 20점, 드래그하거나 회전 버튼으로 통 뒤쪽도 볼 수 있어요.</li><li><b>함정은 단 하나.</b> 걸린 사람은 라운드에서 패배하고, 나머지는 생존 보너스 100점을 받아요.</li><li><b>10라운드 총점으로 승부!</b> 라운드마다 시작 순서를 바꾸고, 최종 점수가 가장 높은 사람이 우승해요.</li></ol><p class="help-fair">칼 색깔은 각 참가자를 구분하기 위한 표시예요. 색에 따라 확률이 달라지지 않습니다.</p><div class="local-record"><span>이 브라우저의 전적</span><strong id="record-summary"></strong><small id="record-best"></small></div><details class="accessible-slots"><summary>키보드·보조기술용 구멍 목록</summary><p>아직 사용하지 않은 번호를 선택하세요. 3D 화면과 같은 구멍입니다.</p><div id="accessible-slots">${Array.from({ length: 16 }, (_, i) => `<button data-slot="${i}" aria-label="구멍 ${i + 1}에 칼 꽂기">${i + 1}</button>`).join('')}</div></details><button class="chunky-button next-button" id="help-close">알겠어요! 돌아가기</button><button class="reset-record" id="clear-record">이 브라우저 전적 초기화</button></div></dialog>
+    <dialog id="result-dialog" class="pirate-dialog"><div class="modal-inner"><span class="result-eyebrow" id="result-eyebrow">ROUND COMPLETE</span><div class="result-symbol" id="result-symbol">✦</div><h2 id="result-title"></h2><p id="result-description"></p><div class="result-scores" id="result-scores"></div><p class="result-note" id="result-note"></p><button class="chunky-button next-button" id="next-round">같은 멤버로 한 판 더 →</button><div class="modal-links"><button id="result-restart">참가자 바꾸기</button><a href="./index.html#games">게임 모음으로</a></div></div></dialog>
+    <dialog id="help-dialog" class="pirate-dialog help-dialog"><div class="modal-inner"><span class="result-eyebrow">A LITTLE COURAGE, A LITTLE LUCK</span><h2>통통! 해적 룰렛</h2><ol class="rules"><li><b>2~8명이 한 기기에서 번갈아!</b> 참가 인원과 이름, 각자 다른 칼 색을 정해요.</li><li><b>내 차례에 구멍을 골라요.</b> 드래그하거나 회전 버튼으로 통 뒤쪽도 볼 수 있어요.</li><li><b>함정은 단 하나.</b> 해적이 튀어나오게 한 사람이 걸리고, 바로 한 판이 끝나요.</li><li><b>짧고 간단한 한 판 승부!</b> 점수 없이 누가 걸리는지 확인하고, 원하면 같은 멤버로 바로 다시 해요.</li></ol><p class="help-fair">칼 색깔은 각 참가자를 구분하기 위한 표시예요. 색에 따라 확률이 달라지지 않습니다.</p><div class="local-record"><span>이 브라우저의 전적</span><strong id="record-summary"></strong></div><details class="accessible-slots"><summary>키보드·보조기술용 구멍 목록</summary><p>아직 사용하지 않은 번호를 선택하세요. 3D 화면과 같은 구멍입니다.</p><div id="accessible-slots">${Array.from({ length: 16 }, (_, i) => `<button data-slot="${i}" aria-label="구멍 ${i + 1}에 칼 꽂기">${i + 1}</button>`).join('')}</div></details><button class="chunky-button next-button" id="help-close">알겠어요! 돌아가기</button><button class="reset-record" id="clear-record">이 브라우저 전적 초기화</button></div></dialog>
     <dialog id="confirm-dialog" class="pirate-dialog"><div class="modal-inner"><span class="result-eyebrow">NEW ADVENTURE</span><h2 id="confirm-title"></h2><p id="confirm-text"></p><button class="chunky-button next-button" id="confirm-yes">초기화하기</button><button class="reset-record" id="confirm-no">취소하고 돌아가기</button></div></dialog>
     <div class="pause-shade" id="pause-shade" hidden><strong>잠시 쉬어가는 중 ☸</strong><p>돌아오면 이어서 진행해요.</p></div>
   </main>`;
@@ -68,16 +68,16 @@ function renderPlayerChips() {
     const color = COLORS[player.color];
     const active = game.phase === 'ready' && game.turnIndex === index;
     const outcome = game.last?.trap ? game.last.loser === index ? '함정' : '생존' : '';
-    return `<article class="player-chip${active ? ' active' : ''}${outcome === '함정' ? ' eliminated' : ''}" style="--player-color:${color[2]}" aria-current="${active ? 'step' : 'false'}"><span class="player-color-dot" aria-hidden="true"></span><span class="player-chip-label"><small>P${index + 1} · ${color[1]}</small><strong>${escapeHTML(player.name)}</strong></span><span class="player-chip-score">${game.score[index]}<small>점</small></span>${outcome ? `<span class="player-chip-outcome">${outcome}</span>` : ''}</article>`;
+    return `<article class="player-chip${active ? ' active' : ''}${outcome === '함정' ? ' eliminated' : ''}" style="--player-color:${color[2]}" aria-current="${active ? 'step' : 'false'}"><span class="player-color-dot" aria-hidden="true"></span><span class="player-chip-label"><small>P${index + 1} · ${color[1]}</small><strong>${escapeHTML(player.name)}</strong></span>${outcome ? `<span class="player-chip-outcome">${outcome}</span>` : ''}</article>`;
   }).join('');
   $('#player-knives').innerHTML = roster.map((player, index) => `<div class="player-knife" style="--knife-color:${COLORS[player.color][2]}" aria-label="${escapeHTML(player.name)}의 ${COLORS[player.color][1]} 칼"><span class="mini-knife" aria-hidden="true"><i></i><b></b></span><small>P${index + 1} · ${COLORS[player.color][1]}</small></div>`).join('');
 }
 function sync() {
   const current = roster[game.turnIndex];
-  $('#turn-owner').textContent = game.phase === 'round-over' || game.phase === 'match-over' ? '라운드 종료' : current.name;
-  $('#round').textContent = game.round; $('#player-count').textContent = `${roster.length}명`;
+  $('#turn-owner').textContent = game.phase === 'game-over' ? '게임 종료' : current.name;
+  $('#player-count').textContent = `${roster.length}명`;
   $('#remaining').textContent = $('#remaining-label').textContent = game.available().length;
-  $('#round-chip').innerHTML = `ROUND ${String(game.round).padStart(2, '0')} <span>${escapeHTML(current.name)} 차례</span>`;
+  $('#round-chip').innerHTML = `한 판 승부 <span>${game.phase === 'game-over' ? '게임 종료' : escapeHTML(current.name) + ' 차례'}</span>`;
   const input = modelsReady && game.phase === 'ready' && !paused && (!busyModal() || $('#help-dialog').open) && !roundBusy;
   scene?.setInput(input, game.used.keys());
   renderPlayerChips();
@@ -87,7 +87,6 @@ function sync() {
   $('#setup-start').disabled = !modelsReady;
   $('#sound').innerHTML = `<span>${settings.sound ? '♫' : '♪'}</span> 효과음 ${settings.sound ? 'ON' : 'OFF'}`; $('#sound').setAttribute('aria-label', settings.sound ? '효과음 끄기' : '효과음 켜기');
   $('#record-summary').textContent = `${record.matches}회 플레이`;
-  $('#record-best').textContent = `개인 최고 참가자 점수 ${Number(record.bestScore || 0).toLocaleString('ko-KR')}점`;
 }
 function readDraftNames() {
   root.querySelectorAll('[data-player-name]').forEach(input => { const index = Number(input.dataset.playerName); if (draftRoster[index]) draftRoster[index].name = input.value.slice(0, 16); });
@@ -141,37 +140,31 @@ async function pick(id, playerIndex = game.turnIndex) {
     root.classList.remove('pirate-pop'); roundBusy = false; showResult(outcome);
   } else {
     const nextPlayer = roster[game.turnIndex];
-    say(`${player.name} 안전! +${GAME.safePoints}점`, `기기를 ${nextPlayer.name}에게 넘겨주세요.`);
+    say(`${player.name} 안전!`, `기기를 ${nextPlayer.name}에게 넘겨주세요.`);
   }
 }
 function fallbackAnimation() { return new Promise(resolve => setTimeout(() => resolve(true), GAME.insertMs)); }
 function showResult(outcome) {
-  const final = game.phase === 'match-over';
-  const winners = final ? game.matchWinners() : outcome.winners;
-  const ordered = roster.map((player, index) => ({ player, index, score: game.score[index], roundScore: game.roundScore[index] })).sort((a, b) => b.score - a.score || a.index - b.index);
-  $('#result-eyebrow').textContent = final ? '10 ROUNDS · FINAL RESULT' : `ROUND ${String(game.round).padStart(2, '0')} COMPLETE`;
-  $('#result-symbol').textContent = final ? winners.length === 1 ? '🏆' : '⚓' : '☠';
-  $('#result-title').textContent = final ? winners.length === 1 ? `${roster[winners[0]].name} 최종 우승!` : '공동 우승!' : `${roster[outcome.loser].name} 함정에 걸렸어요!`;
-  $('#result-description').textContent = final ? winners.map(index => roster[index].name).join(', ') + (winners.length === 1 ? '의 승리예요!' : '의 점수가 같아요!') : `${outcome.winners.map(index => roster[index].name).join(', ')} 생존 보너스 +${GAME.winPoints}점`;
-  $('#result-scores').innerHTML = ordered.map(({ player, index, score, roundScore }) => {
-    const won = winners.includes(index), lost = !final && outcome.loser === index;
-    const status = final ? won ? '우승' : '최종 점수' : lost ? '함정' : '생존';
-    return `<div class="result-player${won ? ' winner' : ''}${lost ? ' loser' : ''}"><span>P${index + 1} · ${escapeHTML(player.name)}</span><small>${status} +${roundScore}</small><strong>${score.toLocaleString('ko-KR')}<i>점</i></strong></div>`;
+  $('#result-eyebrow').textContent = 'ONE BARREL · ONE RESULT';
+  $('#result-symbol').textContent = '☠';
+  $('#result-title').textContent = `${roster[outcome.loser].name} 당첨!`;
+  $('#result-description').textContent = '해적이 튀어나왔어요! 이번 판은 여기서 끝이에요.';
+  $('#result-scores').innerHTML = roster.map((player, index) => {
+    const caught = outcome.loser === index;
+    return `<div class="result-player${caught ? ' loser' : ''}"><span>P${index + 1} · ${escapeHTML(player.name)}</span><strong>${caught ? '당첨 ☠' : '무사 통과'}</strong></div>`;
   }).join('');
-  $('#result-note').textContent = final ? `최고 참가자 점수 ${Math.max(...game.score).toLocaleString('ko-KR')}점` : `다음 라운드는 ${roster[game.round % roster.length].name}부터 시작해요.`;
-  $('#next-round').textContent = final ? '새 게임 설정 →' : '다음 라운드 →';
-  if (final && !recorded) {
-    recorded = true; record.matches = Number(record.matches || 0) + 1; record.bestScore = Math.max(Number(record.bestScore || 0), ...game.score); save(RECORD_KEY, record);
+  $('#result-note').textContent = `칼 ${game.used.size}개 만에 당첨! 점수 없이 가볍게 한 판 더 즐겨요.`;
+  if (!recorded) {
+    recorded = true; record = { matches: Number(record.matches || 0) + 1 }; save(RECORD_KEY, record);
   }
-  sound.play(final && winners.length === 1 ? 'win' : 'lose'); $('#result-dialog').showModal(); sync();
+  sound.play('lose'); $('#result-dialog').showModal(); sync();
 }
 function restart() { token++; sound.stop(); scene?.reset(); roundBusy = false; recorded = false; root.classList.remove('pirate-pop'); dialogs.forEach(dialog => { if (dialog.open) dialog.close(); }); game.restart(); sync(); say('새 판을 시작해요!', `${roster[0].name}부터 차례가 돌아갑니다.`); }
-function next() { $('#result-dialog').close(); if (game.phase === 'match-over') { openSetup(); return; } token++; scene?.reset(); game.nextRound(); sync(); say('새 통, 새로운 행운!', `${roster[game.turnIndex].name}부터 시작해요.`); }
 let confirmAction;
 function confirm(title, text, action) { $('#confirm-title').textContent = title; $('#confirm-text').textContent = text; confirmAction = action; $('#confirm-dialog').showModal(); sync(); }
-$('#restart').addEventListener('click', () => confirm('다시 시작할까요?', '현재 10라운드의 점수와 진행 상황이 초기화됩니다. 참가자 설정과 저장된 전적은 유지돼요.', restart));
+$('#restart').addEventListener('click', () => confirm('다시 시작할까요?', '현재 꽂힌 칼을 비우고 새 함정으로 시작해요. 참가자와 칼 색은 유지돼요.', restart));
 $('#confirm-yes').addEventListener('click', () => { $('#confirm-dialog').close(); confirmAction?.(); }); $('#confirm-no').addEventListener('click', () => $('#confirm-dialog').close());
-$('#result-restart').addEventListener('click', restart); $('#next-round').addEventListener('click', next);
+$('#result-restart').addEventListener('click', () => { $('#result-dialog').close(); openSetup(); }); $('#next-round').addEventListener('click', restart);
 $('#help-open').addEventListener('click', () => { $('#help-dialog').showModal(); sync(); }); $('#help-close').addEventListener('click', () => $('#help-dialog').close());
 $('#setup-open').addEventListener('click', openSetup); $('#setup-cancel').addEventListener('click', () => $('#setup-dialog').close()); $('#setup-start').addEventListener('click', startConfiguredGame);
 $('#setup-count').addEventListener('change', event => adjustPlayerCount(Number(event.currentTarget.value)));
@@ -179,7 +172,7 @@ $('#setup-player-list').addEventListener('click', event => {
   const button = event.target.closest('[data-draft-player]'); if (!button || button.disabled) return;
   readDraftNames(); draftRoster[Number(button.dataset.draftPlayer)].color = Number(button.dataset.draftColor); renderSetupDraft();
 });
-$('#clear-record').addEventListener('click', () => confirm('전적을 지울까요?', '이 브라우저에 저장된 플레이 횟수와 최고 점수를 삭제합니다.', () => { record = { matches: 0, bestScore: 0 }; save(RECORD_KEY, record); sync(); }));
+$('#clear-record').addEventListener('click', () => confirm('전적을 지울까요?', '이 브라우저에 저장된 플레이 횟수를 삭제합니다.', () => { record = { matches: 0 }; save(RECORD_KEY, record); sync(); }));
 $('#sound').addEventListener('click', () => { settings.sound = !settings.sound; sound.enabled = settings.sound; if (settings.sound) { sound.unlock(); sound.play('select'); } else sound.stop(); save(SETTINGS_KEY, settings); sync(); });
 root.querySelectorAll('[data-slot]').forEach(button => button.addEventListener('click', () => pick(Number(button.dataset.slot))));
 $('#rotate-left').addEventListener('click', () => scene?.rotate(-1)); $('#rotate-right').addEventListener('click', () => scene?.rotate(1));

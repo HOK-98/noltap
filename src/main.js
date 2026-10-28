@@ -161,7 +161,7 @@ app.innerHTML = `
             </article>
             <article class="game-card playable-card" data-category="casual">
               <a class="card-art pirate-card-art" href="./pirate.html" aria-label="통통! 해적 룰렛 플레이하기"><span class="card-index">03 <i>·</i> NEW ADVENTURE</span><span class="card-status"><i></i> PLAY NOW</span><img class="pirate-card-gameplay" src="./images/pirate-gameplay.webp" width="1434" height="747" alt="통에서 고개를 내민 해적과 실제 3D 게임 장면" loading="lazy" decoding="async" /><strong class="pirate-card-title">통통!<br /><em>해적 룰렛</em></strong><span class="art-number">03</span></a>
-              <div class="game-card-body"><div class="card-title-row"><div><div class="game-tags"><span>3D 캐주얼</span><span>2~8인 로컬 대전</span></div><h3>통통! 해적 룰렛</h3></div><span class="card-arrow">↗</span></div><p>친구들과 한 화면에서 차례로 칼을 꽂고, 각자 고른 칼 색으로 함정의 행운을 겨뤄봐.</p><div class="game-card-footer"><span class="card-best">한 기기에서 함께 <i>10라운드</i></span><a class="card-play-button" href="./pirate.html">플레이 <b>→</b></a></div></div>
+              <div class="game-card-body"><div class="card-title-row"><div><div class="game-tags"><span>3D 캐주얼</span><span>2~8인 로컬 대전</span></div><h3>통통! 해적 룰렛</h3></div><span class="card-arrow">↗</span></div><p>친구들과 한 화면에서 차례로 칼을 꽂고, 각자 고른 칼 색으로 함정의 행운을 겨뤄봐.</p><div class="game-card-footer"><span class="card-best">한 기기에서 함께 <i>짧은 한 판 승부</i></span><a class="card-play-button" href="./pirate.html">플레이 <b>→</b></a></div></div>
             </article>
           </div>
           <div class="library-footnote"><span><i></i> 새 게임을 준비하고 있어</span><span>SHOWING <b id="shown-game-count">03</b> GAMES</span></div>

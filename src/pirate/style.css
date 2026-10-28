@@ -134,3 +134,8 @@
   .setup-color i { width:11px; height:11px; }
   .setup-color span { font-size:5px; }
 }
+
+/* Explicit contrast on desktop and mobile participant controls. */
+.command-row .setup-button { background:linear-gradient(#28724f,#185337); color:#ffffff; border-color:#e9ba6c; text-shadow:0 1px 2px #123722; }
+.command-row .setup-button:focus-visible { outline:3px solid #ffffff; outline-offset:4px; }
+.score-board .mode-label { font-size:clamp(14px,2vw,25px); }

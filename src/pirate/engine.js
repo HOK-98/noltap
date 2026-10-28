@@ -31,16 +31,8 @@ export class PirateGame {
     return true;
   }
   restart() {
-    this.round = 1;
-    this.score = this.players.map(() => 0);
-    this.roundScore = this.players.map(() => 0);
-    this.wins = this.players.map(() => 0);
-    this.losses = this.players.map(() => 0);
-    this.startRound();
-  }
-  startRound() {
     this.#trap = this.rng(GAME.slots); this.#pending = null; this.used = new Map();
-    this.turnIndex = (this.round - 1) % this.players.length;
+    this.turnIndex = 0;
     this.phase = 'ready'; this.last = null;
   }
   available() { return Array.from({ length: GAME.slots }, (_, id) => id).filter(id => !this.used.has(id)); }
@@ -56,23 +48,13 @@ export class PirateGame {
     const trap = pick.id === this.#trap;
     if (trap) {
       const winners = this.players.map((_, index) => index).filter(index => index !== pick.player);
-      for (const winner of winners) {
-        this.score[winner] += GAME.winPoints; this.roundScore[winner] += GAME.winPoints; this.wins[winner]++;
-      }
-      this.losses[pick.player]++;
-      this.phase = this.round === GAME.rounds ? 'match-over' : 'round-over';
+      this.phase = 'game-over';
       this.last = { ...pick, trap: true, winners, loser: pick.player };
     } else {
-      this.score[pick.player] += GAME.safePoints; this.roundScore[pick.player] += GAME.safePoints;
       this.turnIndex = (this.turnIndex + 1) % this.players.length;
       this.phase = 'ready';
       this.last = { ...pick, trap: false, winners: [], loser: null };
     }
     return this.last;
-  }
-  nextRound() { if (this.phase !== 'round-over') return false; this.round++; this.startRound(); return true; }
-  matchWinners() {
-    const best = Math.max(...this.score);
-    return this.score.map((score, index) => score === best ? index : -1).filter(index => index >= 0);
   }
 }
