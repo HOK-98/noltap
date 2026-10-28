@@ -321,3 +321,51 @@ button { -webkit-user-select: none; user-select: none; }
 .difficulty-options b,.difficulty-options small { display:block; }
 .difficulty-options b { color:#f2f4ef; font-size:12px; }
 .difficulty-options small { margin-top:5px; color:#b5bec5; font-size:10px; }
+/* Home readability: preserve the hierarchy while lifting small utility text. */
+.home-view .portal-hero .hero-description { font-size:15px; }
+.home-view .portal-hero .quick-note { font-size:12px; }
+.home-view .eyebrow { font-size:12px; }
+.home-view .browse-button { font-size:13px; }
+.home-view .hero-bottom { flex-wrap:wrap; font-size:11px; line-height:1.6; }
+.home-view .section-kicker { font-size:10px; }
+.home-view .library-heading p { font-size:13px; line-height:1.65; }
+.home-view .library-heading h2 span { font-size:12px; }
+.home-view .filter-chip { min-height:35px; font-size:12px; }
+.home-view .filter-chip small { font-size:10px; }
+.home-view .card-index,.home-view .card-status { font-size:9px; }
+.home-view .card-art-caption { font-size:9px; }
+.home-view .game-tags { flex-wrap:wrap; }
+.home-view .game-tags span { font-size:11px; }
+.home-view .game-card h3 { font-size:17px; line-height:1.4; }
+.home-view .game-card h3 small { display:inline-block; font-size:10px; }
+.home-view .game-card-body { display:flex; flex-direction:column; min-height:210px; }
+.home-view .game-card-body p { font-size:13px; line-height:1.7; }
+.home-view .game-card-footer { flex-wrap:wrap; margin-top:auto; }
+.home-view .card-best { font-size:11px; line-height:1.6; }
+.home-view .card-best b { font-size:12px; }
+.home-view .card-best i { display:inline-block; font-size:10px; }
+.home-view .card-play-button { min-height:35px; font-size:12px; }
+.home-view .library-footnote { flex-wrap:wrap; gap:8px; font-size:10px; line-height:1.6; }
+.home-view .records-intro p { font-size:12px; line-height:1.65; }
+.home-view .record-metric > span { min-height:32px; font-size:12px; line-height:1.5; }
+.home-view .record-metric > i { display:inline-block; font-size:10px; }
+.home-view .records-strip .record-foot { font-size:10px; }
+.home-view > .ad-slot { flex-wrap:wrap; padding:12px; text-align:center; }
+.home-view > .ad-slot span { font-size:10px; }
+.home-view > .ad-slot small { font-size:11px; line-height:1.6; }
+.site-shell:has(.home-view:not(.hidden)) .main-nav a { font-size:13px; }
+.site-shell:has(.home-view:not(.hidden)) .main-nav small { font-size:10px; }
+.site-shell:has(.home-view:not(.hidden)) .site-footer { font-size:11px; line-height:1.7; }
+.site-shell:has(.home-view:not(.hidden)) .site-links a { font-size:12px; }
+@media(max-width:650px) {
+  .home-view .portal-hero .hero-description { font-size:14px; }
+  .home-view .portal-hero .hero-actions { flex-wrap:wrap; gap:12px; }
+  .home-view .hero-bottom { font-size:10px; }
+  .home-view .game-card-body { min-height:190px; }
+  .home-view .record-metric > span { font-size:11px; }
+  .home-view .records-strip { padding-bottom:44px; }
+  .site-shell:has(.home-view:not(.hidden)) .main-nav a { font-size:11px; }
+}
+@media(max-width:650px) {
+  .home-view .game-filters { width:100%; max-width:100%; }
+}
