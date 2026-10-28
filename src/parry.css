@@ -136,4 +136,38 @@ body { background:radial-gradient(ellipse at 38% 0,#192027 0,transparent 57%),#0
 }
 .rankings-disabled .parry-board { display: none !important; }
 
-
+/* Legible supporting text in the lobby, combat HUD and results. */
+.parry-bar-title,.parry-kicker,.parry-result-eyebrow { font-size:11px; }
+.parry-intro { font-size:15px; }
+.parry-bestline,.parry-controls-note,.parry-hint { font-size:12px; line-height:1.7; }
+.parry-bestline { flex-wrap:wrap; }
+.parry-bestline i,.parry-bestline b,.parry-start small { font-size:11px; }
+.parry-start span { font-size:14px; }
+.parry-rules p,.parry-rules li { font-size:13px; line-height:1.8; }
+.parry-rules small,.parry-controls-note kbd,.parry-hint kbd { font-size:11px; }
+.parry-board-list li,.parry-board-list small { font-size:12px; }
+.parry-exit { font-size:12px; }
+.parry-boss-name span,.parry-boss-name i,.parry-boss-health span,.parry-score span,.parry-combat-data small,.parry-player-vitality span { font-size:11px; }
+.parry-boss-health b,.parry-player-vitality b,.parry-combat-data b { font-size:13px; }
+.parry-is-playing .parry-intent span,.parry-countdown small,.parry-fight-title span { font-size:11px; }
+.parry-is-playing .parry-intent strong { font-size:15px; }
+.parry-is-playing .parry-hint { font-size:11px; }
+.parry-result-main span,.parry-result-main small,.parry-result-grid span { font-size:12px; }
+.parry-result-rank,.parry-result-actions>button:not(.parry-start) { font-size:13px; }
+@media(max-width:620px) {
+  .parry-is-playing .parry-boss-name strong { font-size:14px; }
+  .parry-boss-name span,.parry-boss-name i,.parry-boss-health span,.parry-score span { font-size:10px; }
+  .parry-hud-top { gap:6px; }
+  .parry-is-playing .parry-hint { flex-wrap:wrap; font-size:10px; }
+}
+.parry-nickname label,.parry-nickname input,.parry-nickname button { font-size:13px; }
+.parry-nickname small,.parry-nickname p,.parry-board-date,.parry-board-cols,.parry-board-foot,.parry-rank i { font-size:11px; line-height:1.7; }
+.parry-rank b,.parry-tabs button { font-size:12px; }
+.parry-ad-space,.parry-ad-space span { font-size:11px; line-height:1.7; }
+.parry-ad-space { flex-wrap:wrap; padding:10px; text-align:center; }
+@media(max-width:380px) {
+  .parry-is-playing .parry-underbar { grid-template-columns:minmax(0,1fr); gap:10px; }
+  .parry-is-playing .parry-combat-data { grid-column:1; justify-content:center; gap:16px; }
+  .parry-is-playing .parry-dpad { grid-column:1; grid-row:auto; justify-self:center; }
+  .parry-is-playing .parry-player-vitality { width:100%; justify-self:center; }
+}

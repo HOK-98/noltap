@@ -139,3 +139,35 @@
 .command-row .setup-button { background:linear-gradient(#28724f,#185337); color:#ffffff; border-color:#e9ba6c; text-shadow:0 1px 2px #123722; }
 .command-row .setup-button:focus-visible { outline:3px solid #ffffff; outline-offset:4px; }
 .score-board .mode-label { font-size:clamp(14px,2vw,25px); }
+/* Readable player names, instructions and setup controls. */
+.pirate-nav,.pirate-footer { font-size:11px; }
+.player-chip-label small { font-size:11px; }
+.player-chip-label strong { font-size:14px; }
+.player-chip-outcome { font-size:11px; }
+.player-knife>small { font-size:11px; }
+.tray-caption,.tray-caption i { font-size:10px; }
+.command-message small { font-size:12px; line-height:1.6; }
+.rotate-controls,.remaining-chip { font-size:11px; }
+.round-chip,.round-chip span { font-size:12px; }
+.pirate-dialog .modal-inner>p,.pirate-dialog .rules,.pirate-dialog .result-note { font-size:14px; line-height:1.8; }
+.setup-name-label { font-size:12px; }
+.setup-name-label input { font-size:14px; }
+.setup-color span { font-size:11px; line-height:1.3; }
+.setup-color { min-height:45px; }
+.result-player>span { font-size:13px; }
+.result-player>small,.reset-record,.modal-links button,.modal-links a { font-size:12px; }
+@media(max-width:760px) {
+  .players-strip { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .player-chip { min-height:48px; }
+  .player-chip-label small { font-size:10px; }
+  .player-chip-label strong { font-size:12px; }
+  .pirate-footer { flex-wrap:wrap; gap:8px; font-size:10px; }
+  .command-message small { font-size:11px; }
+  .command-row .chunky-button { font-size:12px; min-height:44px; }
+  .setup-player-row { grid-template-columns:minmax(0,1fr); gap:8px; }
+  .setup-colors { grid-template-columns:repeat(4,minmax(0,1fr)); gap:5px; }
+  .setup-name-label input { font-size:14px; }
+  .setup-dialog .modal-inner>p { font-size:13px; }
+  .setup-color span { font-size:11px; }
+  .player-knife>small { font-size:10px; }
+}

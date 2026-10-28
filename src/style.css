@@ -369,3 +369,66 @@ button { -webkit-user-select: none; user-select: none; }
 @media(max-width:650px) {
   .home-view .game-filters { width:100%; max-width:100%; }
 }
+/* Readable lobby, play HUD and results. */
+.lobby-view .section-kicker,.lobby-topline,.mode-section .how-count { font-size:11px; }
+.hub-back,.lobby-title-block p,.nickname-card label,.save-nickname { font-size:13px; }
+.nickname-card input { height:38px; font-size:14px; }
+.save-nickname { height:38px; }
+.nickname-card label small,.nickname-help { font-size:11px; line-height:1.65; }
+.mode-card p { min-height:44px; font-size:13px; line-height:1.7; }
+.mode-card h3 { font-size:17px; }
+.mode-pill { font-size:10px; }
+.mode-card-bottom { flex-wrap:wrap; }
+.mode-card-bottom > span,.mode-card-bottom > span b { font-size:12px; }
+.mode-start { min-height:38px; font-size:13px; }
+.board-tab { height:32px; font-size:12px; }
+.board-date-row,.leaderboard-more,.leaderboard-columns,.board-row,.board-rank { font-size:11px; }
+.board-row { min-height:40px; }
+.board-nickname { font-size:13px; }
+.me-mark { font-size:9px; }
+.board-empty { padding:16px 8px; font-size:13px; line-height:1.7; }
+.leaderboard-note { font-size:11px; line-height:1.7; }
+.personal-best-title span,.personal-best-score span,.personal-best-score i { font-size:10px; }
+.personal-best-score { flex-wrap:wrap; }
+.personal-best-sub { flex-wrap:wrap; gap:8px; font-size:12px; }
+.personal-best-sub b { font-size:12px; }
+.profile-status { font-size:11px; line-height:1.6; }
+.how-to-list > div { padding:10px 0; }
+.how-to-list > div > b { font-size:10px; }
+.how-to-list p strong { font-size:13px; line-height:1.6; }
+.how-to-list p small { font-size:12px; line-height:1.7; }
+.lobby-example { flex-wrap:wrap; margin-left:0; }
+.lobby-example > strong { font-size:13px; }
+.lobby-example > small,.control-hint,.control-hint kbd,.fair-play-note p { font-size:11px; line-height:1.7; }
+.lobby-view .ad-slot span,.lobby-view .ad-slot small { font-size:11px; }
+.lobby-ad { padding:10px; flex-wrap:wrap; text-align:center; }
+.lobby-view .difficulty-options legend,.lobby-view .difficulty-options small { font-size:12px; }
+.lobby-view .difficulty-options b { font-size:14px; }
+.game-stat > span,.progress-label,.round-info { font-size:11px; }
+.game-stat strong { font-size:20px; }
+.game-footer,.game-footer kbd,.sound-inline { font-size:11px; }
+.word-caption { font-size:13px; line-height:1.6; }
+.word-overline { font-size:11px; }
+.color-choice span { font-size:14px; }
+.color-choice small,.color-choice kbd { font-size:12px; }
+.color-choice { min-height:72px; }
+.result-eyebrow,.result-label,.result-unit,.record-badge { font-size:11px; }
+.result-subtitle,.result-stats-grid span,.secondary-button,.text-button { font-size:13px; }
+.result-stats-grid strong small,.measurement-note,.result-record-comparison,.achievement-empty,.achievement-badge { font-size:11px; line-height:1.7; }
+.result-rank-row,.result-rank-row strong { font-size:12px; }
+.result-rank-row { flex-wrap:wrap; gap:8px; }
+.result-actions { flex-wrap:wrap; }
+@media(max-width:900px) {
+  .lobby-grid { grid-template-columns:minmax(0,1fr); }
+}
+@media(max-width:650px) {
+  .game-stat > span { font-size:10px; letter-spacing:0; }
+  .game-stat strong { font-size:17px; }
+  .progress-label,.round-info { font-size:10px; letter-spacing:0; }
+  .game-footer { flex-wrap:wrap; gap:8px; }
+  .nickname-card { width:100%; }
+  .leaderboard-columns,.board-row { grid-template-columns:minmax(0,1.3fr) .4fr .7fr .6fr; font-size:10px; }
+  .board-nickname { font-size:12px; }
+  .board-date-row { flex-wrap:wrap; gap:8px; }
+  .mode-section .section-heading { flex-wrap:wrap; gap:8px; }
+}
