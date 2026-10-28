@@ -50,6 +50,7 @@ const state = {
   currentQuestion: null,
   questionSequence: null,
   mode: 'survival',
+  difficulty: 'normal',
   seed: 0,
   events: [],
   runStartedAt: 0,
@@ -190,6 +191,7 @@ app.innerHTML = `
         <div class="lobby-grid">
           <div class="lobby-main-column">
             <section class="mode-section" aria-labelledby="mode-heading"><div class="section-heading"><div><span class="section-kicker">CHOOSE YOUR MODE</span><h2 id="mode-heading">모드 선택</h2></div><span class="how-count">3 LIVES · 5 QUESTIONS / STAGE</span></div>
+              <fieldset class="difficulty-options"><legend>버튼 난이도</legend><label><input type="radio" name="choice-difficulty" value="normal" checked /><span><b>기본</b><small>기존 색 버튼으로 선택</small></span></label><label><input type="radio" name="choice-difficulty" value="hard" /><span><b>어려움</b><small>첫 문제부터 색 없이 단어만</small></span></label></fieldset>
               <div class="mode-cards">
                 <article class="mode-card survival-mode"><div class="mode-card-top"><span class="mode-icon">∞</span><span class="mode-pill">ENDLESS</span></div><h3>무한 생존</h3><p>세 번 실수하기 전까지 색상 판단에 도전해. 기록은 전체 랭킹에 등록돼.</p><div class="mode-card-bottom"><span>내 최고 <b id="lobby-survival-best">—</b></span><button class="mode-start" id="start-survival" type="button">시작하기 <b>↗</b></button></div></article>
                 <article class="mode-card daily-mode"><div class="mode-card-top"><span class="mode-icon">◷</span><span class="mode-pill daily-pill">DAILY <i id="challenge-date-short">오늘</i></span></div><h3>오늘의 도전</h3><p>모든 플레이어가 같은 색상 순서로 도전해. 한국 시간 자정에 새 패턴이 시작돼.</p><div class="mode-card-bottom"><span>오늘 최고 <b id="lobby-daily-best">—</b></span><button class="mode-start" id="start-daily" type="button">도전하기 <b>↗</b></button></div></article>
@@ -207,7 +209,7 @@ app.innerHTML = `
 
           <aside class="lobby-side-column">
             <section class="personal-best-panel"><span class="section-kicker">YOUR PERSONAL BEST</span><div class="personal-best-title"><h2>나의 기록</h2><span>LOCAL + ONLINE</span></div><div class="personal-best-score"><strong id="profile-best-stage">—</strong><span>QUESTIONS</span><b id="profile-best-score">0</b><i>PTS</i></div><div class="personal-best-sub"><span>평균 반응 <b id="profile-average">—</b></span><span>최고 콤보 <b id="profile-combo">0</b></span></div><div class="profile-status" id="profile-status"><i></i> 이 기기에 자동 저장</div></section>
-            <section class="how-to-panel"><div class="section-heading"><div><span class="section-kicker">HOW TO PLAY</span><h2>단어 말고 글자색</h2></div><span class="how-count">01—03</span></div><div class="how-to-list"><div><b>01</b><span class="rule-shape shape-green">Aa</span><p><strong>영어 단어의 뜻은 무시해</strong><small>단어가 실제로 표시된 글자색이 정답이야.</small></p></div><div><b>02</b><span class="rule-shape shape-red">●</span><p><strong>아래 4개 색 버튼 중 선택</strong><small>키보드 1 빨강 · 2 파랑 · 3 초록 · 4 노랑</small></p></div><div><b>03</b><span class="fake-mark">1s</span><p><strong>시간은 3문제마다 짧아져</strong><small>31번부터 배경이 바뀌고 버튼은 색 없이 단어만 표시돼.</small></p></div></div><div class="lobby-example"><span style="color:#61a7ff">RED</span><b>→</b><strong>파랑 버튼</strong><small>글자색이 파랑이라서</small></div><div class="control-hint"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd><span>또는 색상 버튼 터치</span></div></section>
+            <section class="how-to-panel"><div class="section-heading"><div><span class="section-kicker">HOW TO PLAY</span><h2>단어 말고 글자색</h2></div><span class="how-count">01—03</span></div><div class="how-to-list"><div><b>01</b><span class="rule-shape shape-green">Aa</span><p><strong>영어 단어의 뜻은 무시해</strong><small>단어가 실제로 표시된 글자색이 정답이야.</small></p></div><div><b>02</b><span class="rule-shape shape-red">●</span><p><strong>아래 4개 색 버튼 중 선택</strong><small>키보드 1 빨강 · 2 파랑 · 3 초록 · 4 노랑</small></p></div><div><b>03</b><span class="fake-mark">1s</span><p><strong>시간은 3문제마다 짧아져</strong><small>31번부터 배경도 바뀌어. 어려움은 처음부터 단어 버튼만 보여.</small></p></div></div><div class="lobby-example"><span style="color:#61a7ff">RED</span><b>→</b><strong>파랑 버튼</strong><small>글자색이 파랑이라서</small></div><div class="control-hint"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd><span>또는 색상 버튼 터치</span></div></section>
             <div class="fair-play-note"><span>◈</span><p>반응속도는 기기와 브라우저의 입력 지연에 영향을 받는 참고 기록입니다.</p></div>
           </aside>
         </div>
@@ -384,6 +386,7 @@ function updateGameStats() {
     ? `평균 반응 ${Math.round(state.reactionTimes.reduce((sum, value) => sum + value, 0) / state.reactionTimes.length)}MS`
     : '평균 반응 —';
   $('#mode-label').textContent = state.mode === 'daily' ? `오늘의 도전 · ${formatDate(state.challengeDate || getKstDate())}` : '무한 생존';
+  $('#mode-label').textContent += state.difficulty === 'hard' ? ' · 어려움' : ' · 기본';
   $('#lives-value').innerHTML = [0, 1, 2].map((index) => `<i class="life ${index < state.lives ? 'life-on' : ''}">♥</i>`).join('');
   $('#lives-value').setAttribute('aria-label', `남은 생명 ${state.lives}개`);
 }
@@ -530,6 +533,7 @@ async function beginGame(mode = 'survival') {
   }
   setStartButtons(true);
   state.mode = mode;
+  state.difficulty = $('input[name="choice-difficulty"]:checked').value;
   state.player.nickname = saveNickname($('#nickname-input').value || state.player.nickname);
   let session = null;
   try {
@@ -579,7 +583,7 @@ async function beginGame(mode = 'survival') {
   wordDisplay.textContent = 'READY';
   wordDisplay.style.color = '#f1f3f0';
   playArea.style.removeProperty('--question-bg');
-  $('#color-choices').classList.remove('words-only');
+  $('#color-choices').classList.toggle('words-only', state.difficulty === 'hard');
   progressFill.style.width = '100%';
   document.querySelectorAll('.color-choice').forEach((button) => { button.disabled = true; });
   updateGameStats();
@@ -620,18 +624,18 @@ function showQuestion() {
   state.questionLocked = false;
   wordDisplay.textContent = question.word;
   wordDisplay.style.color = COLORS[question.colorIndex].hex;
-  const wordsOnly = question.number >= GAME_CONFIG.backgroundStartsAt;
+  const wordsOnly = state.difficulty === 'hard';
   $('#color-choices').classList.toggle('words-only', wordsOnly);
   if (question.backgroundIndex == null) playArea.style.removeProperty('--question-bg');
   else playArea.style.setProperty('--question-bg', COLORS[question.backgroundIndex].background);
-  $('#word-caption').textContent = wordsOnly ? '배경은 무시하고, 글자색과 같은 이름의 버튼을 선택해' : '글자의 실제 색을 선택해';
+  $('#word-caption').textContent = wordsOnly ? '글자색과 같은 이름의 버튼을 선택해' : question.backgroundIndex == null ? '글자의 실제 색을 선택해' : '배경색은 무시하고 글자색을 선택해';
   document.querySelectorAll('.color-choice').forEach((button) => { button.disabled = true; });
   updateGameStats();
   progressFill.style.transition = 'none';
   progressFill.style.width = '100%';
   if (question.number === 31 && !state.chaosNoticeShown) {
     state.chaosNoticeShown = true;
-    showChaosNotice('HARD · 색 없이 단어로 선택!');
+    showChaosNotice('BACKGROUND CHAOS!');
   } else if (question.number === 61) {
     showChaosNotice('MAX SPEED · 1.0 SEC');
   }
@@ -808,6 +812,7 @@ function renderResult(stats) {
   $('#result-mistakes').innerHTML = `${stats.mistakes}<small> / 3</small>`;
   $('#result-title').innerHTML = state.endReason ? '세션 종료' : state.newPersonalBest ? '새 기록 달성<span>!</span>' : '도전 완료<span>!</span>';
   $('#result-subtitle').textContent = state.endReason || (state.mode === 'daily' ? `오늘의 도전 · ${formatDate(state.challengeDate)}` : '무한 생존 기록을 확인해봐.');
+  $('#result-subtitle').textContent += state.difficulty === 'hard' ? ' · 어려움' : ' · 기본';
   $('#record-badge').classList.toggle('hidden', !state.newPersonalBest);
   const previous = state.previousRecord || emptyRecord;
   $('#result-record-comparison').textContent = state.newPersonalBest
@@ -870,7 +875,7 @@ async function shareResult() {
     url.searchParams.delete('challenge');
     url.searchParams.delete('date');
   }
-  const text = `누르지 마! ${state.mode === 'daily' ? '오늘의 도전' : '무한 생존'} 기록\n${stats.questions}문제 처리 · ${stats.score.toLocaleString('ko-KR')}점\n평균 반응 ${stats.averageMs ?? '—'}ms · 정확도 ${stats.accuracy}%\n이 기록을 넘어봐!`;
+  const text = `누르지 마! ${state.mode === 'daily' ? '오늘의 도전' : '무한 생존'} ${state.difficulty === 'hard' ? ' · 어려움' : ' · 기본'} 기록\n${stats.questions}문제 처리 · ${stats.score.toLocaleString('ko-KR')}점\n평균 반응 ${stats.averageMs ?? '—'}ms · 정확도 ${stats.accuracy}%\n이 기록을 넘어봐!`;
   if (navigator.share) {
     try { await navigator.share({ title: '누르지 마! — Noltap', text, url: url.toString() }); } catch { /* User cancelled sharing. */ }
   } else if (navigator.clipboard?.writeText) {
