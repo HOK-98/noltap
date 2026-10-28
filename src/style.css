@@ -432,3 +432,16 @@ button { -webkit-user-select: none; user-select: none; }
   .board-date-row { flex-wrap:wrap; gap:8px; }
   .mode-section .section-heading { flex-wrap:wrap; gap:8px; }
 }
+/* Stronger site branding in the main header. */
+.topbar .brand .noltap-icon { width:48px; height:48px; }
+.topbar .brand-name { font-size:23px; font-weight:700; letter-spacing:-.04em; }
+@media(max-width:650px) {
+  .topbar .brand { gap:9px; }
+  .topbar .brand .noltap-icon { width:44px; height:44px; }
+  .topbar .brand-name { font-size:21px; }
+}
+@media(max-width:380px) {
+  .topbar { height:auto; min-height:80px; flex-wrap:wrap; padding:10px 0; row-gap:8px; }
+  .topbar .brand { margin-right:auto; }
+  .topbar .main-nav { order:3; width:100%; justify-content:flex-end; margin:0; }
+}
