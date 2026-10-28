@@ -200,6 +200,10 @@ button { -webkit-user-select: none; user-select: none; }
 .choice-blue { color: #eff6ff; border-color: #3e73ad; background: linear-gradient(145deg, #285c91, #193c64); }
 .choice-green { color: #edfff4; border-color: #398c65; background: linear-gradient(145deg, #246d4d, #174a36); }
 .choice-yellow { color: #fff8dd; border-color: #a58739; background: linear-gradient(145deg, #846b28, #5d4c20); }
+.color-choices.words-only .color-choice { color: #f2f3f5; border-color: #66717d; background: #20262e; box-shadow: none; }
+.color-choices.words-only .color-choice:hover:not(:disabled) { background: #303944; border-color: #a4aeb9; }
+.color-choices.words-only .color-choice:focus-visible { outline: 2px solid #f2f3f5; outline-offset: 3px; }
+.color-choices.words-only .color-choice kbd { color: #e2e6eb; border-color: #66717d; background: #171c22; }
 .game-footer { min-height: 34px; align-items: end; }
 .game-footer > span:first-child { gap: 7px; }
 .game-footer kbd { color: #d0d9d4; }
@@ -307,5 +311,3 @@ button { -webkit-user-select: none; user-select: none; }
 .rankings-disabled .leaderboard-panel,
 .rankings-disabled .result-rank-row,
 .rankings-disabled .parry-board { display: none !important; }
-
-

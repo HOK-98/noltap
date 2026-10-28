@@ -207,7 +207,7 @@ app.innerHTML = `
 
           <aside class="lobby-side-column">
             <section class="personal-best-panel"><span class="section-kicker">YOUR PERSONAL BEST</span><div class="personal-best-title"><h2>나의 기록</h2><span>LOCAL + ONLINE</span></div><div class="personal-best-score"><strong id="profile-best-stage">—</strong><span>QUESTIONS</span><b id="profile-best-score">0</b><i>PTS</i></div><div class="personal-best-sub"><span>평균 반응 <b id="profile-average">—</b></span><span>최고 콤보 <b id="profile-combo">0</b></span></div><div class="profile-status" id="profile-status"><i></i> 이 기기에 자동 저장</div></section>
-            <section class="how-to-panel"><div class="section-heading"><div><span class="section-kicker">HOW TO PLAY</span><h2>단어 말고 글자색</h2></div><span class="how-count">01—03</span></div><div class="how-to-list"><div><b>01</b><span class="rule-shape shape-green">Aa</span><p><strong>영어 단어의 뜻은 무시해</strong><small>단어가 실제로 표시된 글자색이 정답이야.</small></p></div><div><b>02</b><span class="rule-shape shape-red">●</span><p><strong>아래 4개 색 버튼 중 선택</strong><small>키보드 1 빨강 · 2 파랑 · 3 초록 · 4 노랑</small></p></div><div><b>03</b><span class="fake-mark">1s</span><p><strong>시간은 3문제마다 짧아져</strong><small>31번부터 배경도 바뀌어. 배경색은 무시해.</small></p></div></div><div class="lobby-example"><span style="color:#61a7ff">RED</span><b>→</b><strong>파랑 버튼</strong><small>글자색이 파랑이라서</small></div><div class="control-hint"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd><span>또는 색상 버튼 터치</span></div></section>
+            <section class="how-to-panel"><div class="section-heading"><div><span class="section-kicker">HOW TO PLAY</span><h2>단어 말고 글자색</h2></div><span class="how-count">01—03</span></div><div class="how-to-list"><div><b>01</b><span class="rule-shape shape-green">Aa</span><p><strong>영어 단어의 뜻은 무시해</strong><small>단어가 실제로 표시된 글자색이 정답이야.</small></p></div><div><b>02</b><span class="rule-shape shape-red">●</span><p><strong>아래 4개 색 버튼 중 선택</strong><small>키보드 1 빨강 · 2 파랑 · 3 초록 · 4 노랑</small></p></div><div><b>03</b><span class="fake-mark">1s</span><p><strong>시간은 3문제마다 짧아져</strong><small>31번부터 배경이 바뀌고 버튼은 색 없이 단어만 표시돼.</small></p></div></div><div class="lobby-example"><span style="color:#61a7ff">RED</span><b>→</b><strong>파랑 버튼</strong><small>글자색이 파랑이라서</small></div><div class="control-hint"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd><span>또는 색상 버튼 터치</span></div></section>
             <div class="fair-play-note"><span>◈</span><p>반응속도는 기기와 브라우저의 입력 지연에 영향을 받는 참고 기록입니다.</p></div>
           </aside>
         </div>
@@ -579,6 +579,7 @@ async function beginGame(mode = 'survival') {
   wordDisplay.textContent = 'READY';
   wordDisplay.style.color = '#f1f3f0';
   playArea.style.removeProperty('--question-bg');
+  $('#color-choices').classList.remove('words-only');
   progressFill.style.width = '100%';
   document.querySelectorAll('.color-choice').forEach((button) => { button.disabled = true; });
   updateGameStats();
@@ -619,16 +620,18 @@ function showQuestion() {
   state.questionLocked = false;
   wordDisplay.textContent = question.word;
   wordDisplay.style.color = COLORS[question.colorIndex].hex;
+  const wordsOnly = question.number >= GAME_CONFIG.backgroundStartsAt;
+  $('#color-choices').classList.toggle('words-only', wordsOnly);
   if (question.backgroundIndex == null) playArea.style.removeProperty('--question-bg');
   else playArea.style.setProperty('--question-bg', COLORS[question.backgroundIndex].background);
-  $('#word-caption').textContent = question.backgroundIndex == null ? '글자의 실제 색을 선택해' : '배경색은 무시하고 글자색을 선택해';
+  $('#word-caption').textContent = wordsOnly ? '배경은 무시하고, 글자색과 같은 이름의 버튼을 선택해' : '글자의 실제 색을 선택해';
   document.querySelectorAll('.color-choice').forEach((button) => { button.disabled = true; });
   updateGameStats();
   progressFill.style.transition = 'none';
   progressFill.style.width = '100%';
   if (question.number === 31 && !state.chaosNoticeShown) {
     state.chaosNoticeShown = true;
-    showChaosNotice('BACKGROUND CHAOS!');
+    showChaosNotice('HARD · 색 없이 단어로 선택!');
   } else if (question.number === 61) {
     showChaosNotice('MAX SPEED · 1.0 SEC');
   }
