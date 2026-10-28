@@ -149,7 +149,7 @@ app.innerHTML = `
               <div class="game-card-body">
                 <div class="card-title-row"><div><div class="game-tags"><span>반응속도</span><span>1인 플레이</span></div><h3>누르지 마! <small>DON'T CLICK</small></h3></div><span class="card-arrow">↗</span></div>
                 <p>영어 단어의 뜻에 속지 말고, 실제 글자색을 골라. 세 번 실수하기 전에 기록을 세워봐.</p>
-                <div class="game-card-footer"><span class="card-best">최고 기록 <b id="home-best-score">0</b><i>문제</i></span><button class="card-play-button start-button" type="button">플레이 <b>→</b></button></div>
+                <a class="game-guide-link" href="./dont-click-guide.html">게임 방법·FAQ →</a><div class="game-card-footer"><span class="card-best">최고 기록 <b id="home-best-score">0</b><i>문제</i></span><button class="card-play-button start-button" type="button">플레이 <b>→</b></button></div>
               </div>
             </article>
             <article class="game-card playable-card playable-parry" data-category="action">
@@ -158,11 +158,11 @@ app.innerHTML = `
                 <img class="parry-card-image" src="./images/parry-card.webp" width="1280" height="640" alt="불이 켜진 성채에서 검을 든 붉은 망토의 3D 기사" loading="lazy" decoding="async" />
                 <span class="parry-card-title">PARRY<br /><em>LAST BLADE</em></span><span class="art-number">02</span>
               </a>
-              <div class="game-card-body"><div class="card-title-row"><div><div class="game-tags"><span>패링 액션</span><span>보스 러시</span></div><h3>패리: 라스트 블레이드</h3></div><span class="card-arrow">↗</span></div><p>정면의 검을 읽고 충돌 순간에 쳐내. 끝없이 강해지는 검성에게 맞서 살아남아.</p><div class="game-card-footer"><span class="card-best">1인칭 검술 <i>무한 생존</i></span><a class="card-play-button" href="./parry.html">플레이 <b>→</b></a></div></div>
+              <div class="game-card-body"><div class="card-title-row"><div><div class="game-tags"><span>패링 액션</span><span>보스 러시</span></div><h3>패리: 라스트 블레이드</h3></div><span class="card-arrow">↗</span></div><p>정면의 검을 읽고 충돌 순간에 쳐내. 끝없이 강해지는 검성에게 맞서 살아남아.</p><a class="game-guide-link" href="./parry-guide.html">게임 방법·FAQ →</a><div class="game-card-footer"><span class="card-best">1인칭 검술 <i>무한 생존</i></span><a class="card-play-button" href="./parry.html">플레이 <b>→</b></a></div></div>
             </article>
             <article class="game-card playable-card" data-category="casual">
               <a class="card-art pirate-card-art" href="./pirate.html" aria-label="통통! 해적 룰렛 플레이하기"><span class="card-index">03 <i>·</i> NEW ADVENTURE</span><span class="card-status"><i></i> PLAY NOW</span><img class="pirate-card-gameplay" src="./images/pirate-gameplay.webp" width="1434" height="747" alt="통에서 고개를 내민 해적과 실제 3D 게임 장면" loading="lazy" decoding="async" /><strong class="pirate-card-title">통통!<br /><em>해적 룰렛</em></strong><span class="art-number">03</span></a>
-              <div class="game-card-body"><div class="card-title-row"><div><div class="game-tags"><span>3D 캐주얼</span><span>2~8인 로컬 대전</span></div><h3>통통! 해적 룰렛</h3></div><span class="card-arrow">↗</span></div><p>친구들과 한 화면에서 차례로 칼을 꽂고, 각자 고른 칼 색으로 함정의 행운을 겨뤄봐.</p><div class="game-card-footer"><span class="card-best">한 기기에서 함께 <i>짧은 한 판 승부</i></span><a class="card-play-button" href="./pirate.html">플레이 <b>→</b></a></div></div>
+              <div class="game-card-body"><div class="card-title-row"><div><div class="game-tags"><span>3D 캐주얼</span><span>2~8인 로컬 대전</span></div><h3>통통! 해적 룰렛</h3></div><span class="card-arrow">↗</span></div><p>친구들과 한 화면에서 차례로 칼을 꽂고, 각자 고른 칼 색으로 함정의 행운을 겨뤄봐.</p><a class="game-guide-link" href="./pirate-guide.html">게임 방법·FAQ →</a><div class="game-card-footer"><span class="card-best">한 기기에서 함께 <i>짧은 한 판 승부</i></span><a class="card-play-button" href="./pirate.html">플레이 <b>→</b></a></div></div>
             </article>
           </div>
           <div class="library-footnote"><span><i></i> 새 게임을 준비하고 있어</span><span>SHOWING <b id="shown-game-count">03</b> GAMES</span></div>
@@ -175,7 +175,7 @@ app.innerHTML = `
           <div class="record-metric"><span>최고 문제 수</span><strong id="home-best-level">0</strong><i>Q</i></div>
           <div class="record-foot"><span><i class="tiny-dot"></i> 최고 반응 <b id="home-best-time">—</b></span><span>자동 저장</span></div>
         </section>
-        <div class="ad-slot" aria-label="광고 배치 예정 영역"><span>AD SPACE</span><small>게임 선택과 기록 확인을 방해하지 않는 광고 영역</small></div>
+        
       </section>
 
       <section class="view lobby-view hidden" id="lobby-view" aria-label="누르지 마 게임 메뉴">
@@ -209,11 +209,11 @@ app.innerHTML = `
 
           <aside class="lobby-side-column">
             <section class="personal-best-panel"><span class="section-kicker">YOUR PERSONAL BEST</span><div class="personal-best-title"><h2>나의 기록</h2><span>LOCAL + ONLINE</span></div><div class="personal-best-score"><strong id="profile-best-stage">—</strong><span>QUESTIONS</span><b id="profile-best-score">0</b><i>PTS</i></div><div class="personal-best-sub"><span>평균 반응 <b id="profile-average">—</b></span><span>최고 콤보 <b id="profile-combo">0</b></span></div><div class="profile-status" id="profile-status"><i></i> 이 기기에 자동 저장</div></section>
-            <section class="how-to-panel"><div class="section-heading"><div><span class="section-kicker">HOW TO PLAY</span><h2>단어 말고 글자색</h2></div><span class="how-count">01—03</span></div><div class="how-to-list"><div><b>01</b><span class="rule-shape shape-green">Aa</span><p><strong>영어 단어의 뜻은 무시해</strong><small>단어가 실제로 표시된 글자색이 정답이야.</small></p></div><div><b>02</b><span class="rule-shape shape-red">●</span><p><strong>아래 4개 색 버튼 중 선택</strong><small>키보드 1 빨강 · 2 파랑 · 3 초록 · 4 노랑</small></p></div><div><b>03</b><span class="fake-mark">1s</span><p><strong>시간은 3문제마다 짧아져</strong><small>31번부터 배경도 바뀌어. 어려움은 처음부터 단어 버튼만 보여.</small></p></div></div><div class="lobby-example"><span style="color:#61a7ff">RED</span><b>→</b><strong>파랑 버튼</strong><small>글자색이 파랑이라서</small></div><div class="control-hint"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd><span>또는 색상 버튼 터치</span></div></section>
+            <section class="how-to-panel"><div class="section-heading"><div><span class="section-kicker">HOW TO PLAY</span><h2>단어 말고 글자색</h2></div><span class="how-count">01—03</span></div><div class="how-to-list"><div><b>01</b><span class="rule-shape shape-green">Aa</span><p><strong>영어 단어의 뜻은 무시해</strong><small>단어가 실제로 표시된 글자색이 정답이야.</small></p></div><div><b>02</b><span class="rule-shape shape-red">●</span><p><strong>아래 4개 색 버튼 중 선택</strong><small>키보드 1 빨강 · 2 파랑 · 3 초록 · 4 노랑</small></p></div><div><b>03</b><span class="fake-mark">1s</span><p><strong>시간은 3문제마다 짧아져</strong><small>31번부터 배경도 바뀌어. 어려움은 처음부터 단어 버튼만 보여.</small></p></div></div><div class="lobby-example"><span style="color:#61a7ff">RED</span><b>→</b><strong>파랑 버튼</strong><small>글자색이 파랑이라서</small></div><a class="game-guide-link" href="./dont-click-guide.html">상세 게임 방법·FAQ →</a><div class="control-hint"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd><span>또는 색상 버튼 터치</span></div></section>
             <div class="fair-play-note"><span>◈</span><p>반응속도는 기기와 브라우저의 입력 지연에 영향을 받는 참고 기록입니다.</p></div>
           </aside>
         </div>
-        <div class="ad-slot lobby-ad" aria-label="광고 배치 예정 영역"><span>AD SPACE</span><small>광고는 게임 플레이 중 표시되지 않습니다</small></div>
+        
       </section>
 
       <section class="view game-view hidden" id="game-view" aria-label="게임 화면">
@@ -271,7 +271,7 @@ app.innerHTML = `
           <p class="measurement-note">반응속도는 기기와 브라우저의 입력 지연에 따라 달라질 수 있는 참고 기록입니다.</p>
         </div>
         <div class="result-side-mark" aria-hidden="true"><span>DON'T</span><b>CLICK</b><i>✳</i></div>
-        <div class="ad-slot result-ad" aria-label="광고 배치 예정 영역"><span>AD SPACE</span><small>결과 확인 후 배치되는 광고 영역</small></div>
+        
       </section>
     </main>
 

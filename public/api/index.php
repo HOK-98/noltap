@@ -10,7 +10,9 @@ header('Referrer-Policy: strict-origin-when-cross-origin');
 require_once __DIR__ . '/lib.php';
 
 try {
-    $configPath = __DIR__ . '/config.php';
+    // Keep production credentials outside public_html so static redeploys cannot remove them.
+    $privateConfig = dirname(__DIR__, 2) . '/noltap-private-config.php';
+    $configPath = is_file($privateConfig) ? $privateConfig : __DIR__ . '/config.php';
     if (!is_file($configPath)) {
         api_fail(503, 'setup_required', '랭킹 서버 설정이 필요합니다. 게임은 로컬 모드로 계속 플레이할 수 있습니다.');
     }

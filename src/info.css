@@ -34,3 +34,10 @@ h1 { font-size:clamp(36px,5vw,62px); letter-spacing:-2.5px; line-height:1.25; ma
 .info-footer { display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; padding:25px 0; border-top:1px solid var(--line); color:#81909b; font:10px/1.8 ui-monospace,monospace; }
 @media(max-width:800px) { .info-shell { width:calc(100% - 40px); }.feature-grid { grid-template-columns:1fr; gap:12px; }.feature { padding:22px; }.feature h2 { margin-top:10px; }.game-stories,.contact-layout { grid-template-columns:1fr; }.policy-layout { grid-template-columns:1fr; gap:24px; }.policy-toc { position:static; grid-template-columns:1fr 1fr; padding:18px; background:#0f151c; border:1px solid var(--line); border-radius:8px; }.info-hero { padding:40px 0 30px; }.lead { font-size:15px; }.info-header { min-height:72px; }.contact-panel { padding:24px; }.info-footer { align-items:flex-start; flex-direction:column; } }
 @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+
+.guide-layout { display:grid; grid-template-columns:230px minmax(0,1fr); gap:40px; align-items:start; }
+.guide-subtitle { color:var(--lime); font-size:18px; margin:0 0 16px; }
+.guide-links { display:flex; gap:14px; flex-wrap:wrap; }
+.guide-layout .policy p { font-size:16px; line-height:1.95; word-break:keep-all; overflow-wrap:anywhere; }
+.guide-layout .policy h2 { font-size:24px; }
+@media(max-width:800px) { .guide-layout { grid-template-columns:minmax(0,1fr); gap:24px; }.guide-layout .policy-toc { grid-template-columns:minmax(0,1fr); }.guide-layout .policy p { font-size:15px; } }

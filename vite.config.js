@@ -21,8 +21,10 @@ export default defineConfig({
         about: 'about.html',
         contact: 'contact.html',
         privacy: 'privacy.html',
+        dontClickGuide: 'dont-click-guide.html',
+        parryGuide: 'parry-guide.html',
+        pirateGuide: 'pirate-guide.html',
       },
     },
   },
 });
-
