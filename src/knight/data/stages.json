@@ -1367,7 +1367,7 @@
       28
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 72,
     "brief": "50칸 방문 · 8×8 보드 · 마지막 도착 조건"
   },
@@ -1449,7 +1449,7 @@
       22
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 72,
     "brief": "52칸 방문 · 8×8 보드 · 마지막 도착 조건"
   },
@@ -1531,7 +1531,7 @@
       20
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 72,
     "brief": "54칸 방문 · 8×8 보드 · 마지막 도착 조건"
   },
@@ -1613,7 +1613,7 @@
       46
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 72,
     "brief": "57칸 방문 · 8×8 보드 · 마지막 도착 조건"
   },
@@ -1695,7 +1695,7 @@
       19
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 81,
     "brief": "60칸 방문 · 8×8 보드 · 마지막 도착 조건"
   },
@@ -1777,7 +1777,7 @@
       35
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 91,
     "brief": "62칸 방문 · 8×8 보드 · 마지막 도착 조건"
   },
@@ -1858,7 +1858,7 @@
       28
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 105,
     "brief": "64칸 방문 · 8×8 보드 · 마지막 도착 조건"
   },
@@ -1957,7 +1957,7 @@
       34
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 105,
     "brief": "65칸 방문 · 9×9 보드 · 마지막 도착 조건"
   },
@@ -2056,7 +2056,7 @@
       41
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 105,
     "brief": "66칸 방문 · 9×9 보드 · 마지막 도착 조건"
   },
@@ -2155,7 +2155,7 @@
       39
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 105,
     "brief": "67칸 방문 · 9×9 보드 · 마지막 도착 조건"
   },
@@ -2254,7 +2254,7 @@
       22
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 105,
     "brief": "68칸 방문 · 9×9 보드 · 마지막 도착 조건"
   },
@@ -2353,7 +2353,7 @@
       51
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 105,
     "brief": "69칸 방문 · 9×9 보드 · 마지막 도착 조건"
   },
@@ -2452,7 +2452,7 @@
       44
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 105,
     "brief": "70칸 방문 · 9×9 보드 · 마지막 도착 조건"
   },
@@ -2551,7 +2551,7 @@
       40
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 105,
     "brief": "71칸 방문 · 9×9 보드 · 마지막 도착 조건"
   },
@@ -2650,7 +2650,7 @@
       20
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 105,
     "brief": "72칸 방문 · 9×9 보드 · 마지막 도착 조건"
   },
@@ -2749,7 +2749,7 @@
       47
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 105,
     "brief": "73칸 방문 · 9×9 보드 · 마지막 도착 조건"
   },
@@ -2848,7 +2848,7 @@
       20
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 105,
     "brief": "74칸 방문 · 9×9 보드 · 마지막 도착 조건"
   },
@@ -2947,7 +2947,7 @@
       47
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 107,
     "brief": "75칸 방문 · 9×9 보드 · 마지막 도착 조건"
   },
@@ -3046,7 +3046,7 @@
       30
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 113,
     "brief": "76칸 방문 · 9×9 보드 · 마지막 도착 조건"
   },
@@ -3145,7 +3145,7 @@
       40
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 124,
     "brief": "78칸 방문 · 9×9 보드 · 마지막 도착 조건"
   },
@@ -3244,7 +3244,7 @@
       31
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 137,
     "brief": "80칸 방문 · 9×9 보드 · 마지막 도착 조건"
   },
@@ -3342,7 +3342,7 @@
       34
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 144,
     "brief": "81칸 방문 · 9×9 보드 · 마지막 도착 조건"
   },
@@ -3460,7 +3460,7 @@
       52
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 144,
     "brief": "82칸 방문 · 10×10 보드 · 마지막 도착 조건"
   },
@@ -3578,7 +3578,7 @@
       62
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 144,
     "brief": "83칸 방문 · 10×10 보드 · 마지막 도착 조건"
   },
@@ -3696,7 +3696,7 @@
       85
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 144,
     "brief": "84칸 방문 · 10×10 보드 · 마지막 도착 조건"
   },
@@ -3814,7 +3814,7 @@
       24
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 144,
     "brief": "85칸 방문 · 10×10 보드 · 마지막 도착 조건"
   },
@@ -3932,7 +3932,7 @@
       74
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 144,
     "brief": "86칸 방문 · 10×10 보드 · 마지막 도착 조건"
   },
@@ -4050,7 +4050,7 @@
       66
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 144,
     "brief": "87칸 방문 · 10×10 보드 · 마지막 도착 조건"
   },
@@ -4168,7 +4168,7 @@
       27
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 144,
     "brief": "88칸 방문 · 10×10 보드 · 마지막 도착 조건"
   },
@@ -4286,7 +4286,7 @@
       56
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 144,
     "brief": "90칸 방문 · 10×10 보드 · 마지막 도착 조건"
   },
@@ -4404,7 +4404,7 @@
       75
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 144,
     "brief": "92칸 방문 · 10×10 보드 · 마지막 도착 조건"
   },
@@ -4522,7 +4522,7 @@
       43
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 152,
     "brief": "94칸 방문 · 10×10 보드 · 마지막 도착 조건"
   },
@@ -4640,7 +4640,7 @@
       45
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 163,
     "brief": "96칸 방문 · 10×10 보드 · 마지막 도착 조건"
   },
@@ -4758,7 +4758,7 @@
       66
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 169,
     "brief": "97칸 방문 · 10×10 보드 · 마지막 도착 조건"
   },
@@ -4876,7 +4876,7 @@
       74
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 175,
     "brief": "98칸 방문 · 10×10 보드 · 마지막 도착 조건"
   },
@@ -4994,7 +4994,7 @@
       74
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 182,
     "brief": "99칸 방문 · 10×10 보드 · 마지막 도착 조건"
   },
@@ -5111,7 +5111,7 @@
       62
     ],
     "hintLimit": 1,
-    "showMoves": false,
+    "showMoves": true,
     "branchCycles": 189,
     "brief": "100칸 방문 · 10×10 보드 · 마지막 도착 조건"
   }
