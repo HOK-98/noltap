@@ -29,3 +29,7 @@
 ## 배포
 
 기존 운영 사이트에서는 `knight.html`, `knight-guide.html`, 해당 빌드 번들 및 Worker, 변경된 홈 HTML/번들, sitemap을 개별 업로드합니다. 서버 전용 랭킹 설정을 포함한 전체 폴더를 무작정 삭제하지 않습니다. 정적 파일만 필요하며 모바일 브라우저의 Worker와 LocalStorage를 사용합니다. 게임 콘텐츠에 광고 코드는 없습니다.
+
+## Unity UI 스타터 리소스 적용
+
+사용자가 제공한 `KnightsLastJourney_Unity_Starter.zip`의 `Resources/Art` 리소스를 웹 UI에 적용했습니다. 게임 엔진이나 스테이지 데이터는 C#로 교체하지 않고 기존 JavaScript 구현을 유지합니다. 패널·숲 배경·타일·금색 나이트 말 이미지는 `public/images/knight/`에서 제공하며 PNG를 무손실 WebP로 변환했습니다. 보드 셀은 독립 HTML 버튼이며 좌표와 이동 규칙은 그대로입니다. PC는 테마 카드·게임판·목표 안내의 3열 구성, 태블릿은 2열, 모바일은 게임판 우선 세로 구성입니다. 원본 아트의 사용 권한은 제공된 자료의 라이선스를 따릅니다.
