@@ -16,6 +16,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: 'index.html',
+        knight: 'knight.html',
+        knightGuide: 'knight-guide.html',
         parry: 'parry.html',
         pirate: 'pirate.html',
         about: 'about.html',

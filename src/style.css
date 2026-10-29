@@ -445,3 +445,5 @@ button { -webkit-user-select: none; user-select: none; }
   .topbar .brand { margin-right:auto; }
   .topbar .main-nav { order:3; width:100%; justify-content:flex-end; margin:0; }
 }
+
+.knight-card-art { display:block; text-decoration:none; background:radial-gradient(ellipse at 50% 20%,#e4edb5,#75a8ad); }.knight-card-piece { position:absolute; left:43%; top:14%; font-size:90px; color:#355f73; text-shadow:0 5px #f9d995,0 12px 20px #31565a66; }.knight-card-art .card-art-title { font-size:23px; line-height:1; color:#fff8d8; letter-spacing:-1px; text-shadow:0 2px #355f73; }

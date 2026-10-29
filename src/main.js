@@ -94,7 +94,7 @@ app.innerHTML = `
         <span class="brand-name">NOL<span>TAP</span></span>
       </a>
       <nav class="main-nav" aria-label="주 메뉴">
-        <a href="#games">게임 목록 <small>03</small></a>
+        <a href="#games">게임 목록 <small>04</small></a>
         <a href="#my-records">나의 기록</a>
       </nav>
       <div class="topbar-right">
@@ -123,17 +123,17 @@ app.innerHTML = `
             <div class="hero-art-tile tile-front"><span class="tile-number">01 / LIVE</span><div class="mini-signal"><i>RED</i></div><strong>DON'T<br />CLICK</strong><span class="tile-label">COLOR GAME</span></div>
             <span class="art-spark spark-a">✦</span><span class="art-spark spark-b">✳</span><span class="art-sticker">PLAY<br />ANYTIME</span>
           </div>
-          <div class="hero-bottom"><span><b>03</b> GAMES AVAILABLE</span><i></i><span>새로운 게임이 계속 추가돼</span><span class="hero-scroll">SCROLL TO EXPLORE ↓</span></div>
+          <div class="hero-bottom"><span><b>04</b> GAMES AVAILABLE</span><i></i><span>새로운 게임이 계속 추가돼</span><span class="hero-scroll">SCROLL TO EXPLORE ↓</span></div>
         </div>
 
         <section class="game-library" id="games" aria-labelledby="games-heading">
           <div class="library-heading">
-            <div><span class="section-kicker">PICK YOUR GAME</span><h2 id="games-heading">게임 목록 <span>03</span></h2><p>지금 바로 플레이하거나, 다음 업데이트를 기다려봐.</p></div>
+            <div><span class="section-kicker">PICK YOUR GAME</span><h2 id="games-heading">게임 목록 <span>04</span></h2><p>지금 바로 플레이하거나, 다음 업데이트를 기다려봐.</p></div>
             <div class="game-filters" role="group" aria-label="게임 장르 필터">
-              <button class="filter-chip is-active" type="button" data-filter="all" aria-pressed="true">전체 <small>03</small></button>
+              <button class="filter-chip is-active" type="button" data-filter="all" aria-pressed="true">전체 <small>04</small></button>
               <button class="filter-chip" type="button" data-filter="reaction" aria-pressed="false">반응속도 <small>01</small></button>
               <button class="filter-chip" type="button" data-filter="action" aria-pressed="false">액션 <small>01</small></button>
-              <button class="filter-chip" type="button" data-filter="casual" aria-pressed="false">캐주얼 <small>01</small></button>
+              <button class="filter-chip" type="button" data-filter="casual" aria-pressed="false">캐주얼 <small>01</small></button><button class="filter-chip" type="button" data-filter="puzzle" aria-pressed="false">퍼즐 <small>01</small></button>
             </div>
           </div>
 
@@ -164,8 +164,9 @@ app.innerHTML = `
               <a class="card-art pirate-card-art" href="./pirate.html" aria-label="통통! 해적 룰렛 플레이하기"><span class="card-index">03 <i>·</i> NEW ADVENTURE</span><span class="card-status"><i></i> PLAY NOW</span><img class="pirate-card-gameplay" src="./images/pirate-gameplay.webp" width="1434" height="747" alt="통에서 고개를 내민 해적과 실제 3D 게임 장면" loading="lazy" decoding="async" /><strong class="pirate-card-title">통통!<br /><em>해적 룰렛</em></strong><span class="art-number">03</span></a>
               <div class="game-card-body"><div class="card-title-row"><div><div class="game-tags"><span>3D 캐주얼</span><span>2~8인 로컬 대전</span></div><h3>통통! 해적 룰렛</h3></div><span class="card-arrow">↗</span></div><p>친구들과 한 화면에서 차례로 칼을 꽂고, 각자 고른 칼 색으로 함정의 행운을 겨뤄봐.</p><a class="game-guide-link" href="./pirate-guide.html">게임 방법·FAQ →</a><div class="game-card-footer"><span class="card-best">한 기기에서 함께 <i>짧은 한 판 승부</i></span><a class="card-play-button" href="./pirate.html">플레이 <b>→</b></a></div></div>
             </article>
+            <article class="game-card playable-card" data-category="puzzle"><a class="card-art knight-card-art" href="./knight.html" aria-label="기사의 마지막 여행 플레이"><span class="card-index">04 · NEW JOURNEY</span><span class="card-status">PLAY NOW</span><span class="knight-card-piece" aria-hidden="true">♞</span><span class="card-art-title">KNIGHT'S<br>LAST JOURNEY</span></a><div class="game-card-body"><div class="game-tags"><span>논리 퍼즐</span><span>1인 플레이</span></div><h3>기사의 마지막 여행</h3><p>ㄴ자로 뛰는 작은 기사. 모든 칸을 한 번씩 방문하고, 30개의 여정을 완성해봐.</p><a class="game-guide-link" href="./knight-guide.html">게임 방법·FAQ →</a><div class="game-card-footer"><span class="card-best">30 스테이지 · 데일리</span><a class="card-play-button" href="./knight.html">플레이 <b>→</b></a></div></div></article>
           </div>
-          <div class="library-footnote"><span><i></i> 새 게임을 준비하고 있어</span><span>SHOWING <b id="shown-game-count">03</b> GAMES</span></div>
+          <div class="library-footnote"><span><i></i> 새 게임을 준비하고 있어</span><span>SHOWING <b id="shown-game-count">04</b> GAMES</span></div>
         </section>
 
         <section class="records-strip" id="my-records" aria-labelledby="record-heading">
