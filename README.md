@@ -169,4 +169,4 @@ Hostinger의 최신 절차는 [File Manager 안내](https://www.hostinger.com/su
 
 ## 기사의 마지막 여행
 
-네 번째 게임 `/knight.html`: 30개 검증된 나이트 투어 스테이지, 별점·되돌리기·완주 탐색 힌트, 데일리·도전 모드, 브라우저 기록 저장을 제공합니다. 게임 로직과 데이터는 `src/knight/`에 분리되어 있습니다. [실행·배포 안내](docs/KNIGHT_JOURNEY.md)를 참고하세요.
+네 번째 게임 `/knight.html`: 60개 검증된 나이트 투어 스테이지, 별점·되돌리기·완주 탐색 힌트, 데일리·도전 모드, 브라우저 기록 저장을 제공합니다. 게임 로직과 데이터는 `src/knight/`에 분리되어 있습니다. [실행·배포 안내](docs/KNIGHT_JOURNEY.md)를 참고하세요.
