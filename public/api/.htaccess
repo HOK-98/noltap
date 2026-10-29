@@ -2,3 +2,6 @@ Options -Indexes
 <FilesMatch "^(config\.php|config\.example\.php|lib\.php)$">
   Require all denied
 </FilesMatch>
+<FilesMatch "^(knight-rules\.php|knight-schema\.sql|knight-stages\.json)$">
+ Require all denied
+</FilesMatch>

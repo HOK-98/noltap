@@ -23,3 +23,5 @@ test('old map records are archived once, with sound and stage access retained',(
 
 test('original 30 maps and records preserved, stage 30 clear unlocks 31',()=>{const original=JSON.parse(fs.readFileSync(new URL('./fixtures/knight-original-30.json',import.meta.url)));const boardOnly=({showMoves,...board})=>board;assert.deepEqual(stages.slice(0,30).map(boardOnly),original.map(boardOnly));assert.equal(unlockedStage(migrateProgress({layoutVersion:2,unlockedStage:30,records:{'normal-30':{stars:3}},daily:{}})),31);assert.equal(unlockedStage({records:{'normal-60':{stars:3}},unlockedStage:60}),60);});
 test('every answer-path hint has a legal full continuation across all 60 stages',()=>{for(const s of stages){const p=[s.start];for(const id of s.solution.slice(1)){const r=solve(s,p);assert.equal(r.state,'solved');assert.equal(r.path[0],id);const full=[...p];for(const next of r.path){assert.ok(moves(s,full).includes(next));full.push(next);}assert.equal(status(s,full),'clear');p.push(id);}}});
+
+test('server ranking uses the identical stage rules',()=>{assert.deepEqual(stages,JSON.parse(fs.readFileSync(new URL('../public/api/knight-stages.json',import.meta.url))));});
