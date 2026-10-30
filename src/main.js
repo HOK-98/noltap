@@ -95,7 +95,6 @@ app.innerHTML = `
       </a>
       <nav class="main-nav" aria-label="주 메뉴">
         <a href="#games">게임 목록 <small>04</small></a>
-        <a href="#my-records">나의 기록</a>
       </nav>
       <div class="topbar-right">
         <button class="icon-button sound-toggle" type="button" aria-label="효과음 설정"></button>
@@ -169,13 +168,6 @@ app.innerHTML = `
           <div class="library-footnote"><span><i></i> 새 게임을 준비하고 있어</span><span>SHOWING <b id="shown-game-count">04</b> GAMES</span></div>
         </section>
 
-        <section class="records-strip" id="my-records" aria-labelledby="record-heading">
-          <div class="records-intro"><span class="section-kicker">YOUR PLAY DATA</span><h2 id="record-heading">나의 플레이 기록</h2><p>이 기기에서 플레이한 개인 최고 기록이야.</p></div>
-          <div class="record-metric"><span>누르지 마! 최고 점수</span><strong id="home-record-score">0</strong><i>PTS</i></div>
-          <div class="record-metric"><span>최고 콤보</span><strong id="home-best-combo">0</strong><i>COMBO</i></div>
-          <div class="record-metric"><span>최고 문제 수</span><strong id="home-best-level">0</strong><i>Q</i></div>
-          <div class="record-foot"><span><i class="tiny-dot"></i> 최고 반응 <b id="home-best-time">—</b></span><span>자동 저장</span></div>
-        </section>
         
       </section>
 
@@ -313,10 +305,6 @@ function updateRecordDisplay() {
   const storedDaily = state.localRecords.daily;
   const daily = storedDaily.challengeDate === getKstDate() ? storedDaily : emptyRecord;
   $('#home-best-score').textContent = survival.score.toLocaleString('ko-KR');
-  $('#home-record-score').textContent = survival.score.toLocaleString('ko-KR');
-  $('#home-best-combo').textContent = survival.bestCombo;
-  $('#home-best-level').textContent = survival.questions || 0;
-  $('#home-best-time').textContent = survival.averageMs == null ? '—' : `${survival.averageMs}MS`;
   $('#lobby-survival-best').textContent = survival.questions ? `${survival.questions}문제` : '—';
   $('#lobby-daily-best').textContent = daily.questions ? `${daily.questions}문제` : '—';
 
